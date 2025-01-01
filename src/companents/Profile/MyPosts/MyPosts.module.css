@@ -1,0 +1,11 @@
+.post {
+    color: black;
+    padding: 20px;
+}
+
+.posts {
+    margin-top: 20px;
+}
+.post h4 {
+    margin-left: -10px;
+}

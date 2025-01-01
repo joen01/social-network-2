@@ -1,0 +1,18 @@
+.nav {
+    grid-area: n;
+    background: #95abb4;
+    padding: 10px;
+
+}
+
+.item a {
+    color: rgb(104, 10, 150);
+    text-decoration: none;
+}
+
+.item a:focus {
+    color: gold;
+}
+.fri {
+    padding-top: 30px;
+}

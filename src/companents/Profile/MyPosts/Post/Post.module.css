@@ -1,0 +1,18 @@
+
+.item {
+    color:black;
+    margin-top: 10px;
+    padding: 10px;
+
+}
+.item img {
+    width: 40px;
+    height: 40 px ;
+    border-radius: 50px;
+
+}
+.color {
+    color: #f50505;
+    padding: 10px;
+
+}

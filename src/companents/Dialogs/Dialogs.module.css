@@ -1,0 +1,28 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 3fr 11fr;
+    padding: 20px;
+    align-items: stretch;
+
+}
+.dialogItem {
+
+}
+
+.dialog a:focus {
+             color: gold;
+}
+.dialog a {
+    text-decoration: none;
+}
+.messages{
+text-align:start;
+}
+.dialog img {
+    width: 20px;
+    height: 20px;
+    border-radius: 40px;}
+.textarea{
+display: grid;
+
+}
