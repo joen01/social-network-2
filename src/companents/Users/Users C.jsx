@@ -2,15 +2,26 @@ import React from "react";
 import styles from "./users.module.css";
 import axios from "axios";
 import userPhoto from '../../img/userPhoto.webp'
-import {setCurrentPageAC} from "../../Redux/Users-reducer";
 
 class Users extends React.Component {
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(respons => {
                 this.props.setUsers(respons.data.items)
+                this.props.setTotalUsersCount(respons.data.totalCount)
             })
     }
+
+    onPageChanged = (pageNumber)=> {
+    this.props.setCurrentPage(pageNumber)
+        {
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+                .then(respons => {
+                    this.props.setUsers(respons.data.items)
+                })
+        }
+}
+
 
     render() {
         let pageCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
@@ -24,10 +35,9 @@ class Users extends React.Component {
         return <div>
             <div>
                 {
-                    pages.map(p => <div key={p.id}>
-                        <span className = {this.props.currentPage === p && styles.selectedPage}
-                        onClick={() => {this.props.setCurrentPage(p)}}> {p} </span>
-                    </div>)
+                    pages.map(p => <span key={p.id} className = {this.props.currentPage === p && styles.selectedPage}
+                        onClick={(e) => {this.onPageChanged(p)}}> {p} </span>
+                    )
 
                 }
             </div>
