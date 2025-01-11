@@ -1,10 +1,10 @@
 import React from "react";
-import loanding from "../../../img/loanding.svg";
+import loading from "../../../img/loading.svg";
 import styles from "../../Users/users.module.css";
 
 
-let Preloader = (props) => {
-    return  <img src={loanding} className={styles.loading}/>
+let Preloader = () => {
+    return  <img src={loading} className={styles.loading}/>
 }
 
 

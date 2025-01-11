@@ -13,6 +13,7 @@ import {addMes, updateNewMesText, updateNewPostText} from "./Redux/Store";
 import DialogsContainer from "./companents/Dialogs/DialogsContainer";
 import FriendsContainer from "./companents/Friends/FriendsContainer";
 import UsersContainer from "./companents/Users/UsersContainer";
+import ProfileContainer from "./companents/Profile/Profile Container";
 
 
 const App = (props) => {
@@ -22,7 +23,7 @@ const App = (props) => {
             <Navbar/>
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/Profile/*" element={<Profile/>}/>
+                    <Route path="/Profile/*" element={<ProfileContainer/>}/>
                     <Route path="/Dialogs/*" element={<DialogsContainer/>}/>
                     <Route path="/News/*" element={<News/>}/>
                     <Route path="/Music/*" element={<Music/>}/>
