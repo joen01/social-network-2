@@ -5,7 +5,9 @@ import {connect} from "react-redux";
 import {setUsersProfile} from "../../Redux/Profile-reducer";
 
 class ProfileContainer extends React.Component {
+
     componentDidMount() {
+
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/22`)
             .then(respons => {
                 this.props.setUsersProfile(respons.data);
@@ -24,4 +26,5 @@ const mapStateToProps=(state) => {
         profile:state.profilePage.profile
     }
 }
+
 export default connect (mapStateToProps, {setUsersProfile}) (ProfileContainer)
