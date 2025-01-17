@@ -17,10 +17,10 @@ class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleIsLoading(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(respons => {
+            .then(response => {
                 this.props.toggleIsLoading(false);
-                this.props.setUsers(respons.data.items);
-                this.props.setTotalUsersCount(respons.data.totalCount)
+                this.props.setUsers(response.data.items);
+                this.props.setTotalUsersCount(response.data.totalCount)
             })
     }
 
@@ -29,8 +29,8 @@ class UsersContainer extends React.Component {
         this.props.setCurrentPage(pageNumber);
         {
             axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-                .then(respons => {
-                    this.props.setUsers(respons.data.items)
+                .then(response => {
+                    this.props.setUsers(response.data.items)
                     this.props.toggleIsLoading(false)
 
                 })
