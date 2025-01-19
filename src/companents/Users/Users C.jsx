@@ -73,7 +73,7 @@ let Users = (props) => {
 
     return (
         <div>
-            <div>
+            <div className={styles.userBlok}>
                 {
                     pages.map(p => (
                         <span

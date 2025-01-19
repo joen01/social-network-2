@@ -16,7 +16,7 @@ let initialState = {
 };
 
 
-const UsersReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW: {
             return {
@@ -66,4 +66,4 @@ export const setTotalUsersCountAC = (totalCount) => ({type: SET_TOTAL_USERS_COUN
 export const toggleIsLoadingAC = (isLoading) => ({type: TOGGLE_IS_LOADING, isLoading});
 
 
-export default UsersReducer
+export default usersReducer

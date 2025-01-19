@@ -10,12 +10,13 @@ import FriendsContainer from "./companents/Friends/FriendsContainer";
 import UsersContainer from "./companents/Users/UsersContainer";
 import ProfileContainerUserId from "./companents/Profile/Profile Container";
 import ProfileContainer from "./companents/Profile/Profile Container2";
+import HeaderContainer from "./companents/Header/HeaderContainer";
 
 
 const App = (props) => {
     return (
         <div className="app-wrapper">
-            <Header/>
+            <HeaderContainer/>
             <Navbar/>
             <div className="app-wrapper-content">
                 <Routes>
