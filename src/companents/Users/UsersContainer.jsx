@@ -1,26 +1,26 @@
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleIsLoadingAC,
-    unfollowAC
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleIsLoading,
+    unfollow
 } from "../../Redux/Users-reducer";
-import axios from "axios";
 import Users from "./Users C";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
+import {usersApi} from "../../Api/API";
 
 
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleIsLoading(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
+
+        usersApi.getUsers(this.props.currentPage,this.props.pageSize) .then(data => {
                 this.props.toggleIsLoading(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(data.items);
+                this.props.setTotalUsersCount(data.totalCount)
             })
     }
 
@@ -28,9 +28,8 @@ class UsersContainer extends React.Component {
         this.props.toggleIsLoading(true);
         this.props.setCurrentPage(pageNumber);
         {
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-                .then(response => {
-                    this.props.setUsers(response.data.items)
+            usersApi.getUsers(pageNumber,this.props.pageSize).then(data => {
+                    this.props.setUsers(data.items)
                     this.props.toggleIsLoading(false)
 
                 })
@@ -68,22 +67,22 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         follow: (userId) => {
-            dispatch(unfollowAC(userId))
+            dispatch(follow(userId))
         },
         unfollow: (userId) => {
-            dispatch(followAC(userId))
+            dispatch(unfollow(userId))
         },
         setUsers: (users) => {
-            dispatch(setUsersAC(users))
+            dispatch(setUsers(users))
         },
         setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageAC(pageNumber))
+            dispatch(setCurrentPage(pageNumber))
         },
         setTotalUsersCount: (totalCount) => {
-            dispatch(setTotalUsersCountAC(totalCount))
+            dispatch(setTotalUsersCount(totalCount))
         },
         toggleIsLoading: (isLoading) => {
-            dispatch(toggleIsLoadingAC(isLoading))
+            dispatch(toggleIsLoading(isLoading))
         }
     }
 }
