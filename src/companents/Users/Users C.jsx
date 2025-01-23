@@ -62,7 +62,7 @@ import React from "react";
 import styles from "./users.module.css";
 import userPhoto from '../../img/userPhoto.webp';
 import {NavLink} from "react-router-dom";
-import {followUsers, followUsersApi, unfollowUsers} from "../../Api/API";
+import axios from "axios";
 
 
 let Users = (props) => {
@@ -80,7 +80,9 @@ let Users = (props) => {
                         <span
                             key={p}
                             className={props.currentPage === p ? styles.selectedPage : ''}
-                            onClick={() => { props.onPageChanged(p); }}
+                            onClick={() => {
+                                props.onPageChanged(p);
+                            }}
                         >
                             {p}
                         </span>
@@ -93,26 +95,42 @@ let Users = (props) => {
                         <div key={u.id}>
                             <span>
                                 <div>
-                                    <NavLink to={"/Profile/"+ u.id}>
+                                    <NavLink to={"/Profile/" + u.id}>
                                         <img src={u.photos.small != null ? u.photos.small : userPhoto}
-                                            className={styles.photos} alt="User"/>
+                                             className={styles.photos} alt="User"/>
                                     </NavLink>
                                 </div>
                                 <div>
                                     {u.followed
-                                        ? <button onClick={() => {
-                                            followUsersApi.followUsers(u.id, "delete") .then(data => {
-                                                    if (data.resultCode === 0) {
+                                        ? <button disabled={props.followingInProgress.some(id=> id === u.id)} onClick={() => {
+                                            props.toggleIsDisabled(true,u.id)
+                                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "955d0b76-71b7-4ef2-9f9d-ea2df513ccf2"
+                                                }
+                                            })
+                                                .then(response => {
+                                                    if (response.data.resultCode === 0) {
                                                         props.unfollow(u.id)
                                                     }
+                                                    props.toggleIsDisabled(false,u.id)
                                                 })
                                         }}> Unfollow </button>
 
-                                        : <button onClick={() => {
-                                            followUsersApi.followUsers(u.id,"post")  .then(response => {
+                                        : <button disabled={props.followingInProgress.some(id=> id === u.id)} onClick={() => {
+                                            props.toggleIsDisabled(true,u.id)
+                                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "955d0b76-71b7-4ef2-9f9d-ea2df513ccf2"
+                                                }
+                                            })
+                                                .then(response => {
                                                     if (response.data.resultCode === 0) {
                                                         props.follow(u.id)
                                                     }
+                                                    props.toggleIsDisabled(false,u.id)
                                                 })
                                         }}> follow </button>
                                     }

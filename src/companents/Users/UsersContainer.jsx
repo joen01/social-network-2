@@ -3,7 +3,7 @@ import {
     follow,
     setCurrentPage,
     setTotalUsersCount,
-    setUsers,
+    setUsers, toggleIsDisabled,
     toggleIsLoading,
     unfollow
 } from "../../Redux/Users-reducer";
@@ -46,7 +46,9 @@ class UsersContainer extends React.Component {
                    onPageChanged={this.onPageChanged}
                    users={this.props.users}
                    follow={this.props.follow}
-                   unfollow={this.props.unfollow}/>
+                   unfollow={this.props.unfollow}
+                   toggleIsDisabled={this.props.toggleIsDisabled}
+                   followingInProgress={this.props.followingInProgress}/>
         </>
     }
 
@@ -59,6 +61,7 @@ const mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isLoading: state.usersPage.isLoading,
+        followingInProgress: state.usersPage.followingInProgress
 
 
     }
@@ -83,6 +86,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         toggleIsLoading: (isLoading) => {
             dispatch(toggleIsLoading(isLoading))
+        },
+        toggleIsDisabled: (progress,userId) => {
+            dispatch(toggleIsDisabled(progress,userId))
         }
     }
 }
