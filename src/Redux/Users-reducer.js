@@ -1,3 +1,5 @@
+import {followUsersApi, usersApi} from "../Api/API";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
@@ -56,7 +58,7 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 followingInProgress: action.progress
-                    ? [...state.followingInProgress,action.userId]
+                    ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
         }
@@ -74,5 +76,43 @@ export const setTotalUsersCount = (totalCount) => ({type: SET_TOTAL_USERS_COUNT,
 export const toggleIsLoading = (isLoading) => ({type: TOGGLE_IS_LOADING, isLoading});
 export const toggleIsDisabled = (progress, userId) => ({type: TOGGLE_IS_DISABLED, progress, userId});
 
+
+export const getUsers = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsLoading(true));
+
+        usersApi.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsLoading(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalUsersCount(data.totalCount))
+        })
+    }
+};
+
+export const followThunk = (userId, rest) => {
+    return (dispatch) => {
+        dispatch(toggleIsDisabled(true, userId))
+
+        followUsersApi.followUsers(userId, rest).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(toggleIsDisabled(false, userId))
+        })
+    }
+};
+
+export const unfollowThunk = (userId, rest) => {
+    return (dispatch) => {
+        dispatch(toggleIsDisabled(true, userId))
+
+        followUsersApi.followUsers(userId, rest).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(toggleIsDisabled(false, userId))
+        })
+    }
+};
 
 export default usersReducer
