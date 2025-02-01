@@ -16,15 +16,20 @@ export const usersApi = {
             })
     },
 
-
     followUsers(id, method) {
         return instance[method](`follow/${id}`)
             .then(response => {
                 return response.data;
             })
 
+    },
+
+    getProfile(userId) {
+        return instance.get(`profile/${userId}`)
     }
 }
+
+
 export const authMeApi = {
     auth() {
         return instance.get(`auth/me`)
