@@ -1,5 +1,13 @@
 import {connect} from "react-redux";
-import {follow, followThunk, getUsers, setTotalUsersCount, toggleIsDisabled, unfollow} from "../../Redux/Users-reducer";
+import {
+    follow,
+    followThunk,
+    getUsers,
+    setTotalUsersCount,
+    toggleIsDisabled,
+    unfollow,
+    unfollowThunk
+} from "../../Redux/Users-reducer";
 import Users from "./Users C";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
@@ -43,7 +51,9 @@ class UsersContainer extends React.Component {
                    follow={this.props.follow}
                    unfollow={this.props.unfollow}
                    toggleIsDisabled={this.props.toggleIsDisabled}
-                   followingInProgress={this.props.followingInProgress}/>
+                   followingInProgress={this.props.followingInProgress}
+                   unfollowThunk={this.props.unfollowThunk}
+                   followThunk={this.props.followThunk}/>
         </>
     }
 
@@ -80,7 +90,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(getUsers(currentPage, pageSize))
         },
         followThunk: (userId, rest) => {
-            dispatch(getUsers(userId, rest))
+            dispatch(followThunk(userId, rest))
+        },
+        unfollowThunk: (userId, rest) => {
+            dispatch(unfollowThunk(userId, rest))
         },
 
     }

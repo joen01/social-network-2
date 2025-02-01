@@ -1,4 +1,4 @@
-import {followUsersApi, usersApi} from "../Api/API";
+import {usersApi} from "../Api/API";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -93,7 +93,7 @@ export const followThunk = (userId, rest) => {
     return (dispatch) => {
         dispatch(toggleIsDisabled(true, userId))
 
-        followUsersApi.followUsers(userId, rest).then(data => {
+        usersApi.followUsers(userId, rest).then(data => {
             if (data.resultCode === 0) {
                 dispatch(follow(userId))
             }
@@ -106,9 +106,9 @@ export const unfollowThunk = (userId, rest) => {
     return (dispatch) => {
         dispatch(toggleIsDisabled(true, userId))
 
-        followUsersApi.followUsers(userId, rest).then(data => {
+        usersApi.followUsers(userId, rest).then(data => {
             if (data.resultCode === 0) {
-                dispatch(follow(userId))
+                dispatch(unfollow(userId))
             }
             dispatch(toggleIsDisabled(false, userId))
         })

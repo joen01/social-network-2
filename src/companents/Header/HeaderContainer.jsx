@@ -1,6 +1,4 @@
 import React, {useEffect} from 'react';
-import f from "./Header.module.css"
-import {NavLink} from "react-router-dom";
 import axios from "axios";
 import {connect} from "react-redux";
 import {setUserData} from "../../Redux/Auth-reducer";
