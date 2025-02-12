@@ -1,5 +1,4 @@
 import './App.css';
-import Header from './companents/Header/Header';
 import Navbar from './companents/Navbar/Navbar';
 import News from "./companents/News/News";
 import Music from "./companents/Music/Music";
@@ -8,7 +7,6 @@ import {Route, Routes} from "react-router-dom";
 import DialogsContainer from "./companents/Dialogs/DialogsContainer";
 import FriendsContainer from "./companents/Friends/FriendsContainer";
 import UsersContainer from "./companents/Users/UsersContainer";
-import ProfileContainerUserId from "./companents/Profile/Profile Container";
 import ProfileContainer from "./companents/Profile/Profile Container2";
 import HeaderContainer from "./companents/Header/HeaderContainer";
 
