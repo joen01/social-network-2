@@ -4,27 +4,10 @@ import {connect} from "react-redux";
 import Dialogs from "./Dialogs";
 
 
-// const DialogsContainer = () => {
-//
-//
-//     let onMesChange = (textMes) => {
-//         store.dispatch(updateNewMesTextActionCreator(textMes))
-//     };
-//
-//     let addMessage = () => {
-//         store.dispatch(addMesActionCreator())
-//     };
-//
-//     return (
-//         <Dialogs updateNewMesText={onMesChange}
-//                  addMes={addMessage}
-//                  dialogsPage={store.getState().dialogsPage}/>)
-// }
-
 const mapStateToProps = (state) => {
     return {
         dialogsPage: state.dialogsPage,
-
+        isAuth: state.auth.isAuth
     }
 }
 

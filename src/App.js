@@ -9,9 +9,10 @@ import FriendsContainer from "./companents/Friends/FriendsContainer";
 import UsersContainer from "./companents/Users/UsersContainer";
 import ProfileContainer from "./companents/Profile/Profile Container2";
 import HeaderContainer from "./companents/Header/HeaderContainer";
+import Login from "./companents/Login/Login";
 
 
-const App = (props) => {
+const App = () => {
     return (
         <div className="app-wrapper">
             <HeaderContainer/>
@@ -25,6 +26,7 @@ const App = (props) => {
                     <Route path="/Settings/*" element={<Settings/>}/>
                     <Route path="/Friends/*" element={<FriendsContainer/>}/>
                     <Route path="/Users/*" element={<UsersContainer/>}/>
+                    <Route path="/Login/*" element={<Login/>}/>
                 </Routes>
             </div>
         </div>
