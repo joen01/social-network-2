@@ -1,13 +1,12 @@
-import React from "react";
 import {addMesActionCreator, updateNewMesTextActionCreator} from "../../Redux/Dialogs-reducer";
 import {connect} from "react-redux";
 import Dialogs from "./Dialogs";
+import {WithNavigate} from "../../Hoc/WithAuthNavigate";
 
 
 const mapStateToProps = (state) => {
     return {
-        dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
+        dialogsPage: state.dialogsPage
     }
 }
 
@@ -22,7 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+let WithAuthNavigate = WithNavigate(Dialogs)
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(WithAuthNavigate)
 
 
 export default DialogsContainer

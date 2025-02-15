@@ -2,7 +2,6 @@ import React from "react";
 import f from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import { Navigate } from "react-router-dom";
 
 
 const Dialogs = (props) => {
@@ -18,13 +17,11 @@ const Dialogs = (props) => {
         props.addMes()
     };
 
-    if (!props.isAuth) return <Navigate to={"/Login"}/>;
-
     return (
         <div className={f.dialogs}>
 
             <div className={f.dialogItem}>
-                { dialogElements }
+                {dialogElements}
             </div>
 
             <div className={f.messages}>
@@ -32,7 +29,7 @@ const Dialogs = (props) => {
                 <div>
                     <div>
                         <textarea onChange={onMesChange}
-                                   value={props.dialogsPage.newMessageText}/>
+                                  value={props.dialogsPage.newMessageText}/>
                     </div>
                     <div>
                         <button onClick={addMessage}>отправить</button>

@@ -6,10 +6,10 @@ const SET_USER_PROFILE = "SET_USER_PROFILE";
 
 let initialState = {
     posts: [
-        {message: "Hello, how are you ", lake: "like 1"},
-        {message: "How are you", lake: "like 4"},
-        {message: "How are you ", lake: "like 20"},
-        {message: " :) ", lake: "like 6"},
+        {id: 1, message: "Hello, how are you ", like: "like 1"},
+        {id: 2, message: "How are you", like: "like 4"},
+        {id: 3, message: "How are you ", like: "like 20"},
+        {id: 4, message: " :) ", like: "like 6"},
     ],
     newPostText: " Hello ",
     profile: null
@@ -49,8 +49,8 @@ export const setUsersProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 
 export const getProfileThunk = (userId) => (dispatch) => {
     usersApi.getProfile(userId).then(response => {
-            dispatch(setUsersProfile(response.data))
-        });
+        dispatch(setUsersProfile(response.data))
+    });
 }
 
 
