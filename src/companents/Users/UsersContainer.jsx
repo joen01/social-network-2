@@ -12,6 +12,7 @@ import Users from "./Users C";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
 import {WithNavigate} from "../../Hoc/WithAuthNavigate";
+import {compose} from "redux";
 
 
 class UsersContainer extends React.Component {
@@ -81,7 +82,8 @@ const mapDispatchToProps = (dispatch) => {
         },
 
     }
+
 }
 
 
-export default WithNavigate(connect(mapStateToProps, mapDispatchToProps)(UsersContainer))
+export default compose (connect(mapStateToProps, mapDispatchToProps),WithNavigate)(UsersContainer)

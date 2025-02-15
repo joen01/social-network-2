@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getProfileThunk} from "../../Redux/Profile-reducer";
 import {useParams} from "react-router-dom";
 import {WithNavigate} from "../../Hoc/WithAuthNavigate";
+import {compose} from "redux";
 
 let ProfileContainer = (props) => {
     let {userId} = useParams()
@@ -19,11 +20,12 @@ let ProfileContainer = (props) => {
         <Profile {...props} profile={props.profile}/>)
 }
 
-let AuthNavigateComponent = WithNavigate(ProfileContainer)
 
 const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
     }
 }
-export default connect(mapStateToProps, {getProfileThunk})(AuthNavigateComponent)
+
+
+export default compose(connect(mapStateToProps, {getProfileThunk}),WithNavigate)(ProfileContainer)
