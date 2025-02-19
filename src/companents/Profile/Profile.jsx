@@ -9,7 +9,7 @@ const Profile = (props) => {
         return <Preloader/>
     }
         return <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatusThunk={props.updateStatusThunk}/>
             <h4> FullName - {props.profile.fullName} </h4>
             <span> Network - {props.profile.contacts.vk} </span>
             <hr width="99%;"  />
