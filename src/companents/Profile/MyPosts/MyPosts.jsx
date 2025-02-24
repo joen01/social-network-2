@@ -1,37 +1,55 @@
 import React from 'react';
-import f from "./MyPosts.module.css"
+import f from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import { Field, Form, Formik } from "formik";
 
 const MyPosts = (props) => {
     let postElement = props.posts.map(p => <Post key={p.id} message={p.message} like={p.like}/>);
 
-    let newPostElement = React.createRef();
-
-    let onPostChange = () => {
-        let text = newPostElement.current.value
-        props.updateNewPostText(text)
+    let onAddPost = (values) => {
+        props.addPost(values.post);
     };
 
-    let onAddPost = () => {
-        props.addPost()
-    };
-
-    return <div className={f.post}>
-        <h2>My post</h2>
-
-        <div>
-            <textarea onChange={onPostChange} ref={newPostElement}
-                      value={props.newPostText}/>
+    return (
+        <div className={f.post}>
+            <h2>My Posts</h2>
+            <AddPostForm onAddPost={onAddPost}/>
+            <div className={f.posts}>
+                {postElement}
+            </div>
         </div>
-        <div>
-            <button onClick={onAddPost}> add Post</button>
-        </div>
+    );
+};
 
+const AddPostForm = (props) => {
+    return (
+        <Formik
+            initialValues={{ post: '' }}
+            validate={values => {
+                const errors = {};
+                if (!values.post) {
+                    errors.post = 'Required';
+                }
+                return errors;
+            }}
+            onSubmit={(values, { resetForm }) => {
+                props.onAddPost(values);
+                resetForm();
+            }}
+        >
+            {({ handleSubmit, errors, touched }) => (
+                <Form onSubmit={handleSubmit}>
+                    <div>
+                        <Field name="post" component="textarea" placeholder="Post" />
+                        {errors.post && touched.post && <div className={f.error}>{errors.post}</div>}
+                    </div>
+                    <div>
+                        <button type="submit">Add Post</button>
+                    </div>
+                </Form>
+            )}
+        </Formik>
+    );
+};
 
-        <div className={f.posts}>
-            {postElement}
-        </div>
-
-    </div>
-}
-export default MyPosts
+export default MyPosts;

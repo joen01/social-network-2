@@ -45,6 +45,12 @@ export const profileApi = {
 export const authMeApi = {
     auth() {
         return instance.get(`auth/me`)
+    },
+    authLoginPost() {
+        return instance.post(`auth/login`)
+    },
+    authLoginDelete() {
+        return instance.delete(`auth/login`)
     }
 
 }

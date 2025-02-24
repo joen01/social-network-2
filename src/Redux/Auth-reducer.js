@@ -8,8 +8,6 @@ let initialState = {
     login: null,
     isLoading: false,
     isAuth: false
-
-
 };
 
 
