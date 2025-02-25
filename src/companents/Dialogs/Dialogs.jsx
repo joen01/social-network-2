@@ -60,8 +60,8 @@ import React from "react";
 import f from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import { Field, Formik } from 'formik';
-import * as Yup from 'yup'; // Импортируем Yup для валидации
+import {Field, Formik} from 'formik';
+import * as Yup from "yup";
 
 const Dialogs = (props) => {
     const dialogElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} />);
@@ -89,9 +89,8 @@ const AddMessagesForm = (props) => {
     const validationSchema = Yup.object({
         message: Yup.string()
             .required('Сообщение обязательно')
-            .min(1, 'Сообщение должно содержать хотя бы 1 символ')
+            .min(3, 'Сообщение должно содержать хотя бы 3 символ')
     });
-
     return (
         <Formik
             initialValues={{ message: '' }}
