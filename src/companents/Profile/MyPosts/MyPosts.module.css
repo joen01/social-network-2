@@ -9,7 +9,13 @@
 .post h4 {
     margin-left: -10px;
 }
-.error {
+
+.formControl textarea
+
+{
     font-size: 20px;
-    color: crimson;
+    border:solid red 5px;
+    }
+.error{
+    color: red;
 }
