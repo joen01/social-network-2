@@ -2,8 +2,7 @@ import React from 'react';
 import f from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import {Field, Form, Formik} from "formik";
-import {required} from "../../../utils/Validator/required";
-import * as Yup from "yup";
+import {createValidationSchema} from "../../../utils/Validator/validationFormComponent";
 
 const MyPosts = (props) => {
     let postElement = props.posts.map(p => <Post key={p.id} message={p.message} like={p.like}/>);
@@ -25,11 +24,7 @@ const MyPosts = (props) => {
 
 const AddPostForm = (props) => {
 
-    const validationSchema = Yup.object({
-        post: Yup.string()
-            .required('Сообщение обязательно')
-            .min(5, 'Сообщение должно содержать хотя бы 5 символ')
-    });
+    const validationSchema = createValidationSchema([{name:'post'}])
     return (
         <Formik
             initialValues={{ post: '' }}
@@ -41,8 +36,8 @@ const AddPostForm = (props) => {
         >
             {({ handleSubmit, errors, touched }) => (
                 <Form onSubmit={handleSubmit}>
-                    <div>
-                        <Field name="post" component="textarea" placeholder="Post" validate={required} />
+                    <div className={errors.post && touched.post ? f.formControl : ''}>
+                        <Field name="post" component="textarea" placeholder="Post"/>
                         {errors.post && touched.post && <div className={f.error}>{errors.post}</div>}
                     </div>
                     <div>
