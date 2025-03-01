@@ -1,8 +1,9 @@
 import React from 'react';
 import f from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {Field, Form, Formik} from "formik";
+import {Form, Formik} from "formik";
 import {createValidationSchema} from "../../../utils/Validator/validationFormComponent";
+import FormControl from "../../formControl/FormControl";
 
 const MyPosts = (props) => {
     let postElement = props.posts.map(p => <Post key={p.id} message={p.message} like={p.like}/>);
@@ -36,10 +37,12 @@ const AddPostForm = (props) => {
         >
             {({ handleSubmit, errors, touched }) => (
                 <Form onSubmit={handleSubmit}>
-                    <div className={errors.post && touched.post ? f.formControl : ''}>
-                        <Field name="post" component="textarea" placeholder="Post"/>
-                        {errors.post && touched.post && <div className={f.error}>{errors.post}</div>}
-                    </div>
+                    <FormControl
+                        name="post"
+                        component = "textarea"
+                        errors={errors}
+                        touched={touched}
+                        placeholder="Post"/>
                     <div>
                         <button type="submit">Add Post</button>
                     </div>

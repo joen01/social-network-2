@@ -2,8 +2,9 @@ import React from "react";
 import f from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {Field, Formik} from 'formik';
+import {Form, Formik} from 'formik';
 import {createValidationSchema} from "../../utils/Validator/validationFormComponent";
+import FormControl from "../formControl/FormControl";
 
 const Dialogs = (props) => {
     const dialogElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>);
@@ -41,17 +42,17 @@ const AddMessagesForm = (props) => {
             }}
         >
             {({handleSubmit, errors, touched}) => (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <Field component="textarea" name="message" placeholder="Hello Joen"/>
-                        {errors.message && touched.message ? (
-                            <div className={f.error}>{errors.message}</div>
-                        ) : null}
-                    </div>
+                <Form onSubmit={handleSubmit}>
+                    <FormControl
+                        name="message"
+                        component = "textarea"
+                        errors={errors}
+                        touched={touched}
+                        placeholder="Hello Joen"/>
                     <div>
                         <button type="submit">отправить</button>
                     </div>
-                </form>
+                </Form>
             )}
         </Formik>
     );

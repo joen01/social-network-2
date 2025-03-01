@@ -1,23 +1,34 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import {Field, Form, Formik} from 'formik';
+import {createValidationSchema} from "../../utils/Validator/validationFormComponent";
+import FormControl from "../formControl/FormControl";
 
 const LoginForm = () => {
+    const validationSchema = createValidationSchema([{name: "email"},{name: "password"}])
     return (
         <Formik
-            initialValues={{ Email : '', password: '', rememberMe: false }}
-            onSubmit={(values) => {
-                // Обработка отправки формы
+            initialValues={{ email : '', password: '', rememberMe: false }}
+            validationSchema={validationSchema}
+            onSubmit={(values,{resetForm}) => {
                 console.log(values);
+                resetForm();
             }}
         >
-            {() => (
-                <Form>
-                    <div>
-                        <Field name="Email" placeholder="Email" />
-                    </div>
-                    <div>
-                        <Field name="password" type="password" placeholder="Password" />
-                    </div>
+            {({handleSubmit, errors, touched}) => (
+                <Form onSubmit={handleSubmit}>
+                    <FormControl
+                        name="email"
+                        component = "input"
+                        errors={errors}
+                        touched={touched}
+                        placeholder="Email"/>
+                    <FormControl
+                        name="password"
+                        component = "input"
+                        errors={errors}
+                        touched={touched}
+                        placeholder="Password"/>
+
                     <div>
                         <Field name="rememberMe" type="checkbox" />
                         <label htmlFor="rememberMe"> remember me</label>
