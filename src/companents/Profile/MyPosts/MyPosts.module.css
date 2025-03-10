@@ -16,6 +16,12 @@
     font-size: 20px;
     border:solid red 5px;
     }
+
 .error{
     color: red;
+}
+
+.sameError{
+    color: red;
+    border:solid red 5px;
 }

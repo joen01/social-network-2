@@ -5,6 +5,8 @@ import FormControl from "../formControl/FormControl";
 import {loginThunk} from "../../Redux/Auth-reducer";
 import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
+import f from "../Profile/MyPosts/MyPosts.module.css";
+
 
 const Login = (props) => {
 
@@ -16,7 +18,7 @@ const Login = (props) => {
 
     return <div>
         <h1>Login</h1>
-        <LoginForm loginData={loginData}/>
+        <LoginForm loginData={loginData} errorAuth={props.errorAuth}/>
     </div>
 }
 
@@ -54,6 +56,10 @@ const LoginForm = (props) => {
                     <div>
                         <button type="submit">Login</button>
                     </div>
+                    {props.errorAuth && <div className={f.sameError}>
+                        {props.errorAuth}
+                    </div>
+                    }
                 </Form>
             )}
         </Formik>
@@ -63,6 +69,7 @@ const LoginForm = (props) => {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
+        errorAuth: state.auth.errorAuth
     }
 }
 export default connect(mapStateToProps, {loginThunk})(Login)

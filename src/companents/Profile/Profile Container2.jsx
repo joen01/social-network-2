@@ -9,7 +9,7 @@ import {compose} from "redux";
 let ProfileContainer = (props) => {
     let {userId} = useParams()
 
-    const id = userId || 32011
+    const id = userId || props.myId
     const {getProfileThunk, getStatusThunk} = props
 
     useEffect(() => {
@@ -26,7 +26,8 @@ let ProfileContainer = (props) => {
 const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        myId: state.auth.id
     }
 }
 
