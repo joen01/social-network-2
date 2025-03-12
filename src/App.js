@@ -1,18 +1,31 @@
 import './App.css';
-import Navbar from './companents/Navbar/Navbar';
-import News from "./companents/News/News";
-import Music from "./companents/Music/Music";
-import Settings from "./companents/Settings/Settings";
+import Navbar from './components/Navbar/Navbar';
+import News from "./components/News/News";
+import Music from "./components/Music/Music";
+import Settings from "./components/Settings/Settings";
 import {Route, Routes} from "react-router-dom";
-import DialogsContainer from "./companents/Dialogs/DialogsContainer";
-import FriendsContainer from "./companents/Friends/FriendsContainer";
-import UsersContainer from "./companents/Users/UsersContainer";
-import ProfileContainer from "./companents/Profile/Profile Container2";
-import HeaderContainer from "./companents/Header/HeaderContainer";
-import Login from "./companents/Login/Login";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import FriendsContainer from "./components/Friends/FriendsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/Profile Container2";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
+import {connect} from "react-redux";
+import {initializedApp} from "./Redux/App-reducer";
+import Preloader from "./components/common/Preloader/Preloader";
+import {useEffect} from "react";
 
 
-const App = () => {
+const App = ({initializedApp,initialized}) => {
+
+    useEffect(()=>{
+        initializedApp()
+    },[initializedApp])
+
+    if (!initialized){
+        return <Preloader/>
+    }
+
     return (
         <div className="app-wrapper">
             <HeaderContainer/>
@@ -33,5 +46,9 @@ const App = () => {
     )
 }
 
+const mapStateToProps = (state) => ({
+        initialized: state.app.initialized,
+    })
 
-export default App;
+
+export default connect(mapStateToProps, {initializedApp})(App);

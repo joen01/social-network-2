@@ -86,4 +86,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default compose (connect(mapStateToProps, mapDispatchToProps),WithNavigate)(UsersContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)

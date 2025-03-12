@@ -1,4 +1,5 @@
 import {authMeApi} from "../Api/API";
+import {initializedSuccess} from "./App-reducer";
 
 const SET_USER_DATA = "SET_USER_DATA";
 const SET_ERROR = "SET_ERROR";
@@ -44,6 +45,7 @@ export const getAuthUserDataThunk = () => (dispatch) => {
                     let {id, email, login} = response.data.data;
                     dispatch(setUserData(id, email, login,true))
                 }
+                dispatch(initializedSuccess())
             })
     }
 export const loginThunk = (email,password, rememberMe) => (dispatch) => {
