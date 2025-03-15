@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {
     follow,
     followThunk,
-    getUsers,
+    requestUsers,
     setTotalUsersCount,
     toggleIsDisabled,
     unfollow,
@@ -11,8 +11,13 @@ import {
 import Users from "./Users C";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
-import {WithNavigate} from "../../Hoc/WithAuthNavigate";
-import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsLoading,
+    getPageSize,
+    getTotalUsersCount, getUsers
+} from "../../Redux/usersSelectors";
 
 
 class UsersContainer extends React.Component {
@@ -44,14 +49,27 @@ class UsersContainer extends React.Component {
 
 }
 
+// const mapStateToProps = (state) => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         currentPage: state.usersPage.currentPage,
+//         isLoading: state.usersPage.isLoading,
+//         followingInProgress: state.usersPage.followingInProgress
+//
+//
+//     }
+// }
+
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isLoading: state.usersPage.isLoading,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isLoading: getIsLoading(state),
+        followingInProgress: getFollowingInProgress(state)
 
 
     }
@@ -72,7 +90,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(toggleIsDisabled(progress, userId))
         },
         getUsers: (currentPage, pageSize) => {
-            dispatch(getUsers(currentPage, pageSize))
+            dispatch(requestUsers(currentPage, pageSize))
         },
         followThunk: (userId, rest) => {
             dispatch(followThunk(userId, rest))

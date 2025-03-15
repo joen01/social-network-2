@@ -16,13 +16,13 @@ import Preloader from "./components/common/Preloader/Preloader";
 import {useEffect} from "react";
 
 
-const App = ({initializedApp,initialized}) => {
+const App = ({initializedApp, initialized}) => {
 
-    useEffect(()=>{
+    useEffect(() => {
         initializedApp()
-    },[initializedApp])
+    }, [initializedApp])
 
-    if (!initialized){
+    if (!initialized) {
         return <Preloader/>
     }
 
@@ -47,8 +47,8 @@ const App = ({initializedApp,initialized}) => {
 }
 
 const mapStateToProps = (state) => ({
-        initialized: state.app.initialized,
-    })
+    initialized: state.app.initialized,
+})
 
 
 export default connect(mapStateToProps, {initializedApp})(App);

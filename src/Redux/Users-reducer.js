@@ -77,11 +77,12 @@ export const toggleIsLoading = (isLoading) => ({type: TOGGLE_IS_LOADING, isLoadi
 export const toggleIsDisabled = (progress, userId) => ({type: TOGGLE_IS_DISABLED, progress, userId});
 
 
-export const getUsers = (currentPage, pageSize) => {
+export const requestUsers = (page, pageSize) => {
     return (dispatch) => {
         dispatch(toggleIsLoading(true));
+        dispatch(setCurrentPage(page));
 
-        usersApi.getUsers(currentPage, pageSize).then(data => {
+        usersApi.getUsers(page, pageSize).then(data => {
             dispatch(toggleIsLoading(false));
             dispatch(setUsers(data.items));
             dispatch(setTotalUsersCount(data.totalCount))
