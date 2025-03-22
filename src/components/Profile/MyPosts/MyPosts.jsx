@@ -5,8 +5,12 @@ import {Form, Formik} from "formik";
 import {createValidationSchema} from "../../../utils/Validator/validationFormComponent";
 import FormControl from "../../formControl/FormControl";
 
-const MyPosts = (props) => {
-    let postElement = props.posts.map(p => <Post key={p.id} message={p.message} like={p.like}/>);
+const MyPosts = React.memo(props => {
+    console.log("render")
+
+    let postElement = [...props.posts]
+        .reverse()
+        .map(p => <Post key={p.id} message={p.message} like={p.like}/>);
 
     let onAddPost = (values) => {
         props.addPost(values.post);
@@ -21,7 +25,7 @@ const MyPosts = (props) => {
             </div>
         </div>
     );
-};
+});
 
 const AddPostForm = (props) => {
 

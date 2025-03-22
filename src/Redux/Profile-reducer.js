@@ -24,7 +24,7 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                nextId: state.nextId+1
+                nextId: state.nextId + 1
             };
         }
         case SET_USER_PROFILE: {
@@ -39,7 +39,7 @@ const profileReducer = (state = initialState, action) => {
 };
 
 
-export const addPost = (values) => ({type: ADD_POST,values})
+export const addPost = (values) => ({type: ADD_POST, values})
 export const setUsersProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 
@@ -49,19 +49,25 @@ export const getProfileThunk = (userId) => (dispatch) => {
         dispatch(setUsersProfile(response.data))
     });
 }
-export const getStatusThunk = (userId) => (dispatch) => {
-    profileApi.getStatus(userId)
-        .then(response => {
-            dispatch(setStatus(response.data))
-        });
-}
-export const updateStatusThunk = (status) => (dispatch) => {
-    profileApi.updateStatus(status)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        });
-}
+export const getStatusThunk = (userId) => async (dispatch) => {
+    try {
+        const response = await profileApi.getStatus(userId);
+        dispatch(setStatus(response.data));
+    } catch (error) {
+        console.error("Ошибка при получении статуса:", error);
+    }
+};
+
+export const updateStatusThunk = (status) => async (dispatch) => {
+    try {
+        const response = await profileApi.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    } catch (e){
+        console.error("ошибкаа отправки статуса")
+    }
+};
+
 
 export default profileReducer

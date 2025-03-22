@@ -16,12 +16,16 @@ export const usersApi = {
             })
     },
 
-    followUsers(id, method) {
-        return instance[method](`follow/${id}`)
-            .then(response => {
-                return response.data;
-            })
+    // followUsers(id, method) {
+    //     return instance[method](`follow/${id}`)
+    //         .then(response => {
+    //             return response.data;
+    //         })
+    // },
 
+    async followUsers(id, method) {
+        const response = await instance[method](`follow/${id}`)
+        return response.data;
     },
 
     getProfile(userId) {

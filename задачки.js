@@ -22,3 +22,32 @@ const author = {
 }
 const shorts = author.shortIds[0]
 
+
+const obj = {
+    name: "joen",
+    age: 36,
+    job: "stolar"
+}
+const video = [
+    [1,  "топ 10 игр 2024 года"],
+    [2,  "Лучшая битва Worcraft3"],
+    [3, "топ 5 games"]
+];
+
+   const map = new Map(video)
+map
+    .set("yes",123)
+    .set(obj,1234)
+
+// for (let [key, value] of map) {
+//     console.log(key , value)
+// }
+
+// map.forEach((val,key,m)=>{
+//     console.log(key )
+// })
+
+
+const arr = Object.fromEntries(map)
+
+console.log(arr)
