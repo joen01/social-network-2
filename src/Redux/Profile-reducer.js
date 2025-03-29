@@ -15,7 +15,7 @@ let initialState = {
     ],
     nextId: 5,
     profile: null,
-    status: "there is no status"
+    status: "there is not status"
 
 };
 
@@ -36,7 +36,7 @@ const profileReducer = (state = initialState, action) => {
             return {...state, status: action.status}
         }
         case DELETE_POST: {
-            return {...state, posts: state.posts.filter(p => p.id != action.id)}
+            return {...state, posts: state.posts.filter(p => p.id !== action.id)}
         }
 
         default:
@@ -51,10 +51,10 @@ export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (id) => ({type: DELETE_POST, id});
 
 
-export const getProfileThunk = (userId) => (dispatch) => {
-    usersApi.getProfile(userId).then(response => {
-        dispatch(setUsersProfile(response.data))
-    });
+export const getProfileThunk = (userId) => async (dispatch) => {
+    let response = await usersApi.getProfile(userId)
+    dispatch(setUsersProfile(response.data))
+    ;
 }
 export const getStatusThunk = (userId) => async (dispatch) => {
     try {
