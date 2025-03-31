@@ -1,53 +1,42 @@
 import React from 'react';
 import {Field, Form, Formik} from 'formik';
 import {createValidationSchema} from "../../utils/Validator/validationFormComponent";
-import FormControl from "../formControl/FormControl";
+import {createFormControl} from "../formControl/FormControl";
 import {loginThunk} from "../../Redux/Auth-reducer";
 import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
 import f from "../Profile/MyPosts/MyPosts.module.css";
 
 
-const Login = (props) => {
+const Login = ({loginThunk, isAuth, errorAuth}) => {
 
     let loginData = (values) => {
-        props.loginThunk(values.email, values.password, values.rememberMe)
+        loginThunk(values.email, values.password, values.rememberMe)
     };
 
-    if (props.isAuth) return <Navigate to="/Profile"/>;
+    if (isAuth) return <Navigate to="/Profile"/>;
 
     return <div>
         <h1>Login</h1>
-        <LoginForm loginData={loginData} errorAuth={props.errorAuth}/>
+        <LoginForm loginData={loginData} errorAuth={errorAuth}/>
     </div>
 }
 
-const LoginForm = (props) => {
+const LoginForm = ({loginData, errorAuth}) => {
     const validationSchema = createValidationSchema([{name: "email"}, {name: "password"}])
     return (
         <Formik
             initialValues={{email: '', password: '', rememberMe: false}}
             validationSchema={validationSchema}
             onSubmit={(values, {resetForm}) => {
-                props.loginData(values);
+                loginData(values);
                 resetForm();
             }}
         >
             {({handleSubmit, errors, touched}) => (
                 <Form onSubmit={handleSubmit}>
-                    <FormControl
-                        name="email"
-                        component="input"
-                        errors={errors}
-                        touched={touched}
-                        placeholder="Email"/>
-                    <FormControl
-                        name="password"
-                        component="input"
-                        errors={errors}
-                        touched={touched}
-                        placeholder="Password"
-                        type="password"/>
+                    {createFormControl("email", "input", {errors}, {touched}, "Email")}
+                    {createFormControl("password", "input", {errors}, {touched}, "Password", "password")}
 
                     <div>
                         <Field name="rememberMe" type="checkbox"/>
@@ -56,8 +45,8 @@ const LoginForm = (props) => {
                     <div>
                         <button type="submit">Login</button>
                     </div>
-                    {props.errorAuth && <div className={f.sameError}>
-                        {props.errorAuth}
+                    {errorAuth && <div className={f.sameError}>
+                        {errorAuth}
                     </div>
                     }
                 </Form>
