@@ -4,16 +4,16 @@ import Preloader from "../../../common/Preloader/Preloader";
 import ProfileStatus from ".././ProfileStatuswithHooks";
 
 
-const ProfileInfo = (props) => {
-    if (!props.profile) {
+const ProfileInfo = ({profile,status,updateStatusThunk}) => {
+    if (!profile) {
         return <Preloader/>
     }
 
     let ava = () => {
         return (
-            !props.profile.photos.large ?
+            !profile.photos.large ?
                 <img src="https://pixelbox.ru/wp-content/uploads/2021/04/ava-mult-vk-7.jpg" alt="Default avatar"/> :
-                <img src={props.profile.photos.large} alt="User avatar"/>
+                <img src={profile.photos.large} alt="User avatar"/>
         );
     }
 
@@ -28,18 +28,9 @@ const ProfileInfo = (props) => {
 
             <div className={f.ava}>
                 {ava()}
-                <ProfileStatus status={props.status} updateStatusThunk={props.updateStatusThunk}/>
+                <ProfileStatus status={status} updateStatusThunk={updateStatusThunk}/>
             </div>
 
         </div>)
 }
 export default ProfileInfo
-// вариант записи
-// {
-//     !props.profile.photos.large &&
-//     <img src="https://pixelbox.ru/wp-content/uploads/2021/04/ava-mult-vk-7.jpg"/>
-// }
-// {
-//     props.profile.photos.large &&
-//     <img src={props.profile.photos.large}/>
-// }

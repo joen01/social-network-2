@@ -3,17 +3,17 @@ import ProfileInfo from "./MyPosts/ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPosts Container";
 import Preloader from "../common/Preloader/Preloader";
 
-const Profile = (props) => {
+const Profile = ({profile,status,updateStatusThunk,store}) => {
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader/>
     }
         return <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatusThunk={props.updateStatusThunk}/>
-            <h4> FullName - {props.profile.fullName} </h4>
-            <span> Network - {props.profile.contacts.vk} </span>
+            <ProfileInfo profile={profile} status={status} updateStatusThunk={updateStatusThunk}/>
+            <h4> FullName - {profile.fullName} </h4>
+            <span> Network - {profile.contacts.vk} </span>
             <hr width="99%;"  />
-            <MyPostsContainer store={props.store}/>
+            <MyPostsContainer store={store}/>
 
         </div>
     }

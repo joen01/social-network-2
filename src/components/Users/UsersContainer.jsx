@@ -16,7 +16,8 @@ import {
     getFollowingInProgress,
     getIsLoading,
     getPageSize,
-    getTotalUsersCount, getUsers
+    getTotalUsersCount,
+    getUsers
 } from "../../Redux/usersSelectors";
 
 
@@ -75,33 +76,41 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => {
-            dispatch(follow(userId))
-        },
-        unfollow: (userId) => {
-            dispatch(unfollow(userId))
-        },
-        setTotalUsersCount: (totalCount) => {
-            dispatch(setTotalUsersCount(totalCount))
-        },
-        toggleIsDisabled: (progress, userId) => {
-            dispatch(toggleIsDisabled(progress, userId))
-        },
-        getUsers: (currentPage, pageSize) => {
-            dispatch(requestUsers(currentPage, pageSize))
-        },
-        followThunk: (userId, rest) => {
-            dispatch(followThunk(userId, rest))
-        },
-        unfollowThunk: (userId, rest) => {
-            dispatch(unfollowThunk(userId, rest))
-        },
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userId) => {
+//             dispatch(follow(userId))
+//         },
+//         unfollow: (userId) => {
+//             dispatch(unfollow(userId))
+//         },
+//         setTotalUsersCount: (totalCount) => {
+//             dispatch(setTotalUsersCount(totalCount))
+//         },
+//         toggleIsDisabled: (progress, userId) => {
+//             dispatch(toggleIsDisabled(progress, userId))
+//         },
+//         getUsers: (currentPage, pageSize) => {
+//             dispatch(requestUsers(currentPage, pageSize))
+//         },
+//         followThunk: (userId, rest) => {
+//             dispatch(followThunk(userId, rest))
+//         },
+//         unfollowThunk: (userId, rest) => {
+//             dispatch(unfollowThunk(userId, rest))
+//         },
+//
+//     }
+//
+// }
 
-    }
 
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setTotalUsersCount,
+    toggleIsDisabled,
+    getUsers: requestUsers,
+    followThunk,
+    unfollowThunk
+})(UsersContainer)

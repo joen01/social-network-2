@@ -6,8 +6,6 @@ import {createValidationSchema} from "../../../utils/Validator/validationFormCom
 import FormControl from "../../formControl/FormControl";
 
 const MyPosts = React.memo(props => {
-    console.log("render")
-
     let postElement = [...props.posts]
         .reverse()
         .map(p => <Post key={p.id} message={p.message} like={p.like}/>);
