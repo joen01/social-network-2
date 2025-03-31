@@ -59,31 +59,48 @@
 // export default Users
 
 import React from "react";
-import Paginator from "../common/Paginator/Paginator";
-import User from "/User ";
+import styles from "./users.module.css";
+import userPhoto from '../../img/userPhoto.webp';
+import {NavLink} from "react-router-dom";
 
 
-let Users = (props) => {
-
+let User = ({user,followingInProgress,unfollowThunk,followThunk}) => {
     return (
         <div>
-            <Paginator totalUsersCount={props.totalUsersCount}
-                       pageSize={props.pageSize}
-                       currentPage={props.currentPage}
-                       onPageChanged={props.onPageChanged}/>
-            <div>
-                {
-                    props.users.map(u => (<User key={u.id}
-                                                user={u}
-                                                followingInProgress={props.followingInProgress}
-                                                unfollowThunk={props.unfollowThunk}
-                                                followThunk={props.followThunk}
-                        />  ))
-                }
-            </div>
+            <span>
+                <div>
+                    <NavLink to={"/Profile/" + user.id}>
+                        <img src={user.photos.small != null ? user.photos.small : userPhoto}
+                             className={styles.photos} alt="User"/>
+                    </NavLink>
+                </div>
+                <div>
+                    {user.followed
+                        ? <button disabled={followingInProgress.some(id => id === user.id)}
+                                  onClick={() => {
+                                      unfollowThunk(user.id, 'delete')
+                                  }}> Unfollow </button>
+
+                        : <button disabled={followingInProgress.some(id => id === user.id)}
+                                  onClick={() => {
+                                      followThunk(user.id, 'post')
+                                  }}> follow </button>
+                    }
+                                </div>
+            </span>
+            <span>
+                <span>
+                    <div>{user.name}</div>
+                    <div>{user.status}</div>
+                </span>
+                <span>
+                    <div>{user.location?.city}</div>
+                    <div>{user.location?.country}</div>
+                </span>
+            </span>
         </div>
     );
 }
 
 
-export default Users;
+export default User;

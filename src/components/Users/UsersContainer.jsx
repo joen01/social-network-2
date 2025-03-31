@@ -8,7 +8,7 @@ import {
     unfollow,
     unfollowThunk
 } from "../../Redux/Users-reducer";
-import Users from "./Users C";
+import Users from "./Users";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
 import {
