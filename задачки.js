@@ -28,16 +28,19 @@ const obj = {
     age: 36,
     job: "stolar"
 }
+
+// console.log(Object.entries(obj));
+
 const video = [
     [1,  "топ 10 игр 2024 года"],
     [2,  "Лучшая битва Worcraft3"],
     [3, "топ 5 games"]
 ];
 
-   const map = new Map(video)
-map
-    .set("yes",123)
-    .set(obj,1234)
+   const map = new Set(obj)
+// map
+//     .set("yes",123)
+//     .set(obj,1234)
 
 // for (let [key, value] of map) {
 //     console.log(key , value)
@@ -48,6 +51,6 @@ map
 // })
 
 
-const arr = Object.fromEntries(map)
+// const arr = Object.fromEntries(map)
 
-console.log(arr)
+console.log(map)
