@@ -1,14 +1,16 @@
 .selectedPage {
     font-weight: bold;
-    font-size: 110%;
+    font-size: 150%;
 
     border: 5px solid red;
 
 }
 
-.userBlok {
-    width: 3%;
-    overflow: auto;
-
+.paginator {
+    padding: 10px;
+    margin: 10px;
+}
+.pageCount {
+    margin: 3px;
 
 }
