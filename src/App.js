@@ -3,17 +3,18 @@ import Navbar from './components/Navbar/Navbar';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import FriendsContainer from "./components/Friends/FriendsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/Profile Container2";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {initializedApp} from "./Redux/App-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import store from "./Redux/Redux-store";
 
 
 const App = ({initializedApp, initialized}) => {
@@ -51,4 +52,17 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, {initializedApp})(App);
+const AppContainer = connect(mapStateToProps, {initializedApp})(App);
+
+const AppSamurai = () => {
+    return (
+    <BrowserRouter>
+        <React.StrictMode>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>,
+        </React.StrictMode>
+    </BrowserRouter>)
+};
+
+export default AppSamurai
