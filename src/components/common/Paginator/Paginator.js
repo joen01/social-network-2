@@ -9,6 +9,7 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
     for (let i = 1; i <= pageCount; i++) {
         pages.push(i);
     }
+
     let portionCount = Math.ceil(pageCount / portionSize)
     let [numberPortion, setNumberPortion] = useState(1)
     let leftBorderPortion = (numberPortion - 1) * portionSize + 1
