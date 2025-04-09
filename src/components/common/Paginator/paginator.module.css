@@ -1,14 +1,21 @@
+.pageCount{
+    padding: 2px;
+    border-radius: 50%;
+    color: #555555;
+    border: 1px solid #ccc;
+}
 .selectedPage {
     font-weight: bold;
     font-size: 110%;
-
     border: 5px solid red;
+}
+.pagination {
+    width: auto;
+    text-align: left;
+    padding: 10px;
+    margin: 10px auto;
 
 }
-
-.userBlok {
-    width: 3%;
-    overflow: auto;
-
-
+.pagination button{
+    border-radius: 40%;
 }

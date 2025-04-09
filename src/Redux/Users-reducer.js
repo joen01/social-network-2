@@ -11,7 +11,7 @@ const TOGGLE_IS_DISABLED = "TOGGLE_IS_DISABLED";
 
 let initialState = {
     users: [],
-    pageSize: 20,
+    pageSize: 100,
     totalUsersCount: 0,
     currentPage: 1,
     isLoading: true,
