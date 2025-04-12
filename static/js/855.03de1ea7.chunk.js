@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_kabzda_1=self.webpackChunkreact_kabzda_1||[]).push([[855],{855:(e,a,s)=>{s.r(a),s.d(a,{default:()=>n});s(43);const t="Settings_item__qz36x";var c=s(579);const n=()=>(0,c.jsx)("div",{className:t,children:"Settings"})}}]);
+//# sourceMappingURL=855.03de1ea7.chunk.js.map

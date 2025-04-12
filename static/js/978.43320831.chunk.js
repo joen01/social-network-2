@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_kabzda_1=self.webpackChunkreact_kabzda_1||[]).push([[978],{978:(e,a,s)=>{s.r(a),s.d(a,{default:()=>_});s(43);const c="News_item__wMFLz";var t=s(579);const _=()=>(0,t.jsx)("div",{className:c,children:"News"})}}]);
+//# sourceMappingURL=978.43320831.chunk.js.map

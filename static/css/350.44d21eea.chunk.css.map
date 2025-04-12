@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/350.44d21eea.chunk.css","mappings":"AAAA,qBACI,WACJ,CACA,wBAGI,kBAAmB,CADnB,WAAY,CADZ,UAEoB","sources":["components/Friends/Friends.module.css"],"sourcesContent":[".item {\r\n    color: brown;\r\n}\r\n.ava img {\r\n    width: 20px;\r\n    height: 20px;\r\n    border-radius: 40px;}\r\n"],"names":[],"sourceRoot":""}
