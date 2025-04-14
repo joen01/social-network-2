@@ -3,7 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 // import News from "./components/News/News";
 // import Music from "./components/Music/Music";
 // import Settings from "./components/Settings/Settings";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import FriendsContainer from "./components/Friends/FriendsContainer";
 // import UsersContainer from "./components/Users/UsersContainer";
@@ -68,13 +68,13 @@ const AppContainer = connect(mapStateToProps, {initializedApp})(App);
 
 const AppSamurai = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <React.StrictMode>
                 <Provider store={store}>
                     <AppContainer/>
                 </Provider>
             </React.StrictMode>
-        </BrowserRouter>)
+        </HashRouter>)
 };
 
 export default AppSamurai
