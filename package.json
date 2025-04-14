@@ -1,7 +1,7 @@
 {
   "name": "react-kabzda-1",
-  "homepage": "https://joen01.github.io/social-network-2",
   "version": "0.1.0",
+  "homepage": "https://joen01.github.io/social-network-2",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
