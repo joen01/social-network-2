@@ -6,7 +6,7 @@ import f from "../Friends.module.css"
 const Friend = (props) => {
     return <div className={f.ava}>
         {props.name}
-        <img src="https://sopranoclub.ru/images/memy-na-avu-275-memnyh-avatarok/file56870.jpeg"/>
+        <img src="https://sopranoclub.ru/images/memy-na-avu-275-memnyh-avatarok/file56870.jpeg" alt={"fdfd"}/>
 <span>
 
     <button> Remove Friends</button>

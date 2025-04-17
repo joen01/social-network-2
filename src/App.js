@@ -1,15 +1,15 @@
+import {HashRouter, Route, Routes} from "react-router-dom";
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 // import News from "./components/News/News";
 // import Music from "./components/Music/Music";
 // import Settings from "./components/Settings/Settings";
-import {HashRouter, Route, Routes} from "react-router-dom";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import FriendsContainer from "./components/Friends/FriendsContainer";
 // import UsersContainer from "./components/Users/UsersContainer";
+// import Login from "./components/Login/Login";
 import ProfileContainer from "./components/Profile/Profile Container2";
 import HeaderContainer from "./components/Header/HeaderContainer";
-// import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
 import {initializedApp} from "./Redux/App-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
@@ -65,6 +65,9 @@ const mapStateToProps = (state) => ({
 
 
 const AppContainer = connect(mapStateToProps, {initializedApp})(App);
+
+
+
 
 const AppSamurai = () => {
     return (

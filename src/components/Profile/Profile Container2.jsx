@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfileThunk, getStatusThunk, updateStatusThunk} from "../../Redux/Profile-reducer";
+import {getProfileThunk, getStatusThunk, savePhoto, updateStatusThunk} from "../../Redux/Profile-reducer";
 import {useParams} from "react-router-dom";
 import {WithNavigate} from "../../Hoc/WithAuthNavigate";
 import {compose} from "redux";
@@ -18,8 +18,13 @@ let ProfileContainer = (props) => {
             getStatusThunk(id)
         }, [id, getProfileThunk, getStatusThunk]
     )
-    return (
-        <Profile {...props} profile={props.profile} status={props.status} updateStatusThunk={props.updateStatusThunk}/>)
+        return (
+        <Profile {...props}
+                 profile={props.profile}
+                 status={props.status}
+                 updateStatusThunk={props.updateStatusThunk}
+                 isOwner={id === props.myId}
+                 savePhoto={props.savePhoto}/>)
 }
 
 
@@ -35,5 +40,6 @@ const mapStateToProps = (state) => {
 export default compose(connect(mapStateToProps, {
     getProfileThunk,
     getStatusThunk,
-    updateStatusThunk
+    updateStatusThunk,
+    savePhoto,
 }), WithNavigate)(ProfileContainer)
