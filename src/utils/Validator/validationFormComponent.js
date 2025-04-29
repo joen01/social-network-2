@@ -5,6 +5,12 @@ export const createValidationSchema = (fields) => {
     const schema = {};
     fields.forEach(field => {
         switch (field.name) {
+            case 'fullName':
+                schema[field.name] = Yup.string().required('Обязательно')
+                    .required('Имя обязательно')
+                    .min(2, '')
+                    .max(15, "max simbols")
+                break;
             case 'post':
                 schema[field.name] = Yup.string()
                     .required('Пост обязательный')

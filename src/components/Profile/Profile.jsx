@@ -1,10 +1,10 @@
 import React from 'react';
-import ProfileInfo from "./MyPosts/ProfileInfo/ProfileInfo";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPosts Container";
 import Preloader from "../common/Preloader/Preloader";
 
 
-const Profile = ({profile, status, updateStatusThunk, store, isOwner, savePhoto}) => {
+const Profile = ({profile, status, updateStatusThunk, store, isOwner, savePhoto, saveProfile}) => {
     if (!profile) {
         return <Preloader/>
     }
@@ -14,6 +14,7 @@ const Profile = ({profile, status, updateStatusThunk, store, isOwner, savePhoto}
                      updateStatusThunk={updateStatusThunk}
                      isOwner={isOwner}
                      savePhoto={savePhoto}
+                     saveProfile={saveProfile}
         />
         <hr width="99%;"/>
         <MyPostsContainer store={store}/>

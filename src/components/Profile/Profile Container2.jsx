@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfileThunk, getStatusThunk, savePhoto, updateStatusThunk} from "../../Redux/Profile-reducer";
+import {getProfileThunk, getStatusThunk, savePhoto, saveProfile, updateStatusThunk} from "../../Redux/Profile-reducer";
 import {useParams} from "react-router-dom";
 import {WithNavigate} from "../../Hoc/WithAuthNavigate";
 import {compose} from "redux";
@@ -24,7 +24,8 @@ let ProfileContainer = (props) => {
                  status={props.status}
                  updateStatusThunk={props.updateStatusThunk}
                  isOwner={id === props.myId}
-                 savePhoto={props.savePhoto}/>)
+                 savePhoto={props.savePhoto}
+                 saveProfile={props.saveProfile}/>)
 }
 
 
@@ -41,5 +42,5 @@ export default compose(connect(mapStateToProps, {
     getProfileThunk,
     getStatusThunk,
     updateStatusThunk,
-    savePhoto,
+    savePhoto,saveProfile
 }), WithNavigate)(ProfileContainer)

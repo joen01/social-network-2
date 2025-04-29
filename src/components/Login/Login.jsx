@@ -35,8 +35,8 @@ const LoginForm = ({loginData, errorAuth}) => {
         >
             {({handleSubmit, errors, touched}) => (
                 <Form onSubmit={handleSubmit}>
-                    {createFormControl("email", "input", {errors}, {touched}, "Email")}
-                    {createFormControl("password", "input", {errors}, {touched}, "Password", "password")}
+                    {createFormControl("email", "input", {errors}, {touched}, "Email","","Login :")}
+                    {createFormControl("password", "input", {errors}, {touched}, "Password", "password","Password :")}
 
                     <div>
                         <Field name="rememberMe" type="checkbox"/>

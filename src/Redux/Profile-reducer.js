@@ -54,7 +54,6 @@ export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (id) => ({type: DELETE_POST, id});
 export const setPhotosSuccess = (photos) => ({type: SET_PHOTO_SUCCESS, photos});
 
-
 export const getProfileThunk = (userId) => async (dispatch) => {
     let response = await usersApi.getProfile(userId)
     dispatch(setUsersProfile(response.data))
@@ -85,6 +84,17 @@ export const savePhoto = (file) => async (dispatch) => {
         const response = await profileApi.savePhotos(file)
         if (response.data.resultCode === 0) {
             dispatch(setPhotosSuccess(response.data.data.photos))
+        }
+    } catch (e) {
+        console.error("ошибка отправки файла")
+    }
+};
+export const saveProfile = (profile) => async (dispatch, getState) => {
+    try {
+        const userId = getState().auth.id
+        const response = await profileApi.updateProfile(profile)
+        if (response.data.resultCode === 0) {
+            dispatch(getProfileThunk(userId))
         }
     } catch (e) {
         console.error("ошибка отправки файла")

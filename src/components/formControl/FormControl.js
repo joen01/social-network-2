@@ -2,9 +2,10 @@ import f from "../Profile/MyPosts/MyPosts.module.css";
 import {Field} from "formik";
 import React from 'react';
 
-const FormControl = ({name,errors,touched,placeholder,component,type }) => {
+const FormControl = ({name,errors,touched,placeholder,component,type,nameLabel }) => {
   return(
       <div className={errors[name] && touched[name] ? f.formControl : ''}>
+          <label htmlFor={name}> {nameLabel} </label>
           <Field name={name} component={component} placeholder={placeholder} type={type}/>
           {errors[name] && touched[name] && <div className={f.error}>{errors[name]}</div>}
       </div>
@@ -12,7 +13,7 @@ const FormControl = ({name,errors,touched,placeholder,component,type }) => {
 }
 export default FormControl
 
-export const createFormControl = (name,component,errors,touched,placeholder,type) => (
+export const createFormControl = (name,component,errors,touched,placeholder,type,nameLabel) => (
     <FormControl
     name={name}
     component={component}
@@ -20,5 +21,6 @@ export const createFormControl = (name,component,errors,touched,placeholder,type
     touched={touched}
     placeholder={placeholder}
     type={type}
+    nameLabel={nameLabel}
 
     />)
