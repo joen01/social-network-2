@@ -25,7 +25,8 @@ let ProfileContainer = (props) => {
                  updateStatusThunk={props.updateStatusThunk}
                  isOwner={id === props.myId}
                  savePhoto={props.savePhoto}
-                 saveProfile={props.saveProfile}/>)
+                 saveProfile={props.saveProfile}
+                 error={props.errorProfile}/>)
 }
 
 
@@ -33,7 +34,8 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        myId: state.auth.id
+        myId: state.auth.id,
+        errorProfile: state.profilePage.errorProfile
     }
 }
 

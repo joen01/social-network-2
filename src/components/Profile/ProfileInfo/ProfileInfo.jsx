@@ -4,7 +4,7 @@ import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "../ProfileStatuswithHooks";
 import ProfileDataForm from "./ProfileDataForm";
 
-const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, saveProfile}) => {
+const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, saveProfile,error}) => {
     let [editMode, setEditMode] = useState(false)
 
     if (!profile) {
@@ -38,8 +38,8 @@ const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, sa
                 {editMode && <ProfileDataForm profile={profile}
                                               saveProfile={saveProfile}
                                               goToNotEditMode={() => {
-                                                  setEditMode(false)
-                                              }}/>}
+                                                  setEditMode(false)}}
+                                              error={error}/>}
             </div>
 
         </div>)

@@ -5,6 +5,7 @@ const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 const DELETE_POST = "DELETE_POST";
 const SET_PHOTO_SUCCESS = "SET_PHOTO_SUCCESS";
+const SET_PROFILE_ERROR = "SET_PROFILE_ERROR";
 
 
 let initialState = {
@@ -16,7 +17,8 @@ let initialState = {
     ],
     nextId: 5,
     profile: null,
-    status: "there is not status"
+    status: "there is not status",
+    errorProfile: null
 
 };
 
@@ -42,6 +44,9 @@ const profileReducer = (state = initialState, action) => {
         case SET_PHOTO_SUCCESS: {
             return {...state, profile: {...state.profile, photos: action.photos}}
         }
+        case SET_PROFILE_ERROR: {
+            return {...state, errorProfile: action.errorMessages}
+        }
         default:
             return state;
     }
@@ -53,6 +58,7 @@ export const setUsersProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (id) => ({type: DELETE_POST, id});
 export const setPhotosSuccess = (photos) => ({type: SET_PHOTO_SUCCESS, photos});
+export const setProfileError = (errorMessages) => ({type: SET_PROFILE_ERROR, errorMessages});
 
 export const getProfileThunk = (userId) => async (dispatch) => {
     let response = await usersApi.getProfile(userId)
@@ -95,9 +101,15 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
         const response = await profileApi.updateProfile(profile)
         if (response.data.resultCode === 0) {
             dispatch(getProfileThunk(userId))
+            dispatch(setProfileError(null))
+        } else {
+        const errorMessages = response.data.messages[0]
+        dispatch(setProfileError(errorMessages))
+            return errorMessages; // Возвращаем сообщение об ошибке
         }
     } catch (e) {
-        console.error("ошибка отправки файла")
+        console.error("ошибка отправки файла");
+        return "Ошибка отправки данных"; // Возвращаем общее сообщение об ошибке
     }
 };
 
