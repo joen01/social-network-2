@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, Form, Formik} from 'formik';
+import {Form, Formik} from 'formik';
 import {createValidationSchema} from "../../utils/Validator/validationFormComponent";
 import {createFormControl} from "../formControl/FormControl";
 import {loginThunk} from "../../Redux/Auth-reducer";
@@ -8,21 +8,21 @@ import {Navigate} from "react-router-dom";
 import f from "../Profile/MyPosts/MyPosts.module.css";
 
 
-const Login = ({loginThunk, isAuth, errorAuth}) => {
+const Login = ({loginThunk, isAuth, errorAuth, captchaUrl}) => {
 
     let loginData = (values) => {
-        loginThunk(values.email, values.password, values.rememberMe)
+        loginThunk(values.email, values.password, values.rememberMe, values.captcha)
     };
 
     if (isAuth) return <Navigate to="/Profile"/>;
 
     return <div>
         <h1>Login</h1>
-        <LoginForm loginData={loginData} errorAuth={errorAuth}/>
+        <LoginForm loginData={loginData} errorAuth={errorAuth} captchaUrl={captchaUrl}/>
     </div>
 }
 
-const LoginForm = ({loginData, errorAuth}) => {
+const LoginForm = ({loginData, errorAuth, captchaUrl}) => {
     const validationSchema = createValidationSchema([{name: "email"}, {name: "password"}])
     return (
         <Formik
@@ -35,13 +35,12 @@ const LoginForm = ({loginData, errorAuth}) => {
         >
             {({handleSubmit, errors, touched}) => (
                 <Form onSubmit={handleSubmit}>
-                    {createFormControl("email", "input", errors, touched, "Email","","Login :")}
-                    {createFormControl("password", "input", errors, touched, "Password", "password","Password :")}
+                    {createFormControl("email", "input", errors, touched, "Email", "", "Login :")}
+                    {createFormControl("password", "input", errors, touched, "Password", "password", "Password :")}
+                    {createFormControl("rememberMe", "", errors, touched, "", "checkbox", "Remember me")}
+                    {captchaUrl && <img src={captchaUrl}/>}
+                    {captchaUrl && createFormControl("captcha", "input", errors, touched, "Symbols from image", "", )}
 
-                    <div>
-                        <Field name="rememberMe" type="checkbox"/>
-                        <label htmlFor="rememberMe"> remember me</label>
-                    </div>
                     <div>
                         <button type="submit">Login</button>
                     </div>
@@ -58,7 +57,9 @@ const LoginForm = ({loginData, errorAuth}) => {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
-        errorAuth: state.auth.errorAuth
+        errorAuth: state.auth.errorAuth,
+        captchaUrl: state.auth.captchaUrl,
+
     }
 }
 export default connect(mapStateToProps, {loginThunk})(Login)

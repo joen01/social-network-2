@@ -45,11 +45,9 @@ const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, sa
         </div>)
 }
 const ProfileData = ({profile, isOwner, goToEditMode}) => {
-
-
     return <div>
         <div className={f.fullName}>
-            FullName - <b>{profile.fullName} </b>
+            <b>{profile.fullName} </b>
         </div>
         <div>
             <b>About me - </b> {profile.aboutMe}

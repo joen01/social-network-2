@@ -15,14 +15,12 @@ export const usersApi = {
                 return response.data;
             })
     },
-
     // followUsers(id, method) {
     //     return instance[method](`follow/${id}`)
     //         .then(response => {
     //             return response.data;
     //         })
     // },
-
     async followUsers(id, method) {
         const response = await instance[method](`follow/${id}`)
         return response.data;
@@ -62,11 +60,16 @@ export const authMeApi = {
     auth() {
         return instance.get(`auth/me`)
     },
-    login(email, password, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email, password, rememberMe = false, captcha="") {
+        return instance.post(`auth/login`, {email, password, rememberMe,captcha})
     },
     logout() {
         return instance.delete(`auth/login`)
     }
 
+}
+export const securityApi = {
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`)
+    }
 }
