@@ -1,4 +1,4 @@
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 // import News from "./components/News/News";
@@ -29,7 +29,21 @@ const Settings = WithSuspense(lazy(() => import('./components/Settings/Settings'
 const App = ({initializedApp, initialized}) => {
 
     useEffect(() => {
-        initializedApp()
+        initializedApp();
+
+        // обработка всех ошибок промисов
+
+        // const handleRejection = (event) => {
+        //     console.log("Unhandled rejection:", event);
+        //     alert(`Unhandled rejection (promise: ${event.promise}, reason: ${event.reason})`);
+        // };
+        //
+        // window.addEventListener('unhandledrejection', handleRejection);
+        //
+        // return () => {
+        //     window.removeEventListener('unhandledrejection', handleRejection);
+        // };
+
     }, [initializedApp])
 
     if (!initialized) {
@@ -42,10 +56,9 @@ const App = ({initializedApp, initialized}) => {
             <Navbar/>
             <div className="app-wrapper-content">
                 <Routes>
+                    <Route path="/" element={<ProfileContainer/>}/>
+                    <Route path="*" element={<b> 404 NOT FOUND </b>}/>
                     <Route path="/Profile/:userId?" element={<ProfileContainer/>}/>
-                    {/*<Route path="/Dialogs/*" element={<Suspense fallback={<Preloader />}>*/}
-                    {/*    <DialogsContainer/>*/}
-                    {/*</Suspense>}/>*/}
                     <Route path="/Dialogs/*" element={<DialogsContainer/>}/>
                     <Route path="/News/*" element={<News/>}/>
                     <Route path="/Music/*" element={<Music/>}/>
@@ -67,17 +80,15 @@ const mapStateToProps = (state) => ({
 const AppContainer = connect(mapStateToProps, {initializedApp})(App);
 
 
-
-
 const AppSamurai = () => {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <React.StrictMode>
                 <Provider store={store}>
                     <AppContainer/>
                 </Provider>
             </React.StrictMode>
-        </HashRouter>)
+        </BrowserRouter>)
 };
 
 export default AppSamurai

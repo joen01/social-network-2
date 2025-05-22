@@ -81,7 +81,8 @@ export const updateStatusThunk = (status) => async (dispatch) => {
             dispatch(setStatus(status))
         }
     } catch (e) {
-        console.error("ошибкаа отправки статуса")
+        console.error(`ошибка ${e.message}`)
+
     }
 };
 
