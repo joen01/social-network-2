@@ -1,12 +1,13 @@
 import React from "react";
 import f from "../Friends.module.css"
+import ava from "../../../img/ava.png"
 
 
 
 const Friend = (props) => {
     return <div className={f.ava}>
         {props.name}
-        <img src="https://sopranoclub.ru/images/memy-na-avu-275-memnyh-avatarok/file56870.jpeg" alt={"fdfd"}/>
+        <img src={ava} alt={"аватарка"}/>
 <span>
 
     <button> Remove Friends</button>

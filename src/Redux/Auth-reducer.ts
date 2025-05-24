@@ -6,7 +6,16 @@ const SET_ERROR = "samurai-network/auth/SET_ERROR";
 const SET_CAPTCHA_URL = "samurai-network/auth/SET_CAPTCHA_URL";
 
 
-let initialState = {
+type initialStateType = {
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isLoading: boolean,
+    isAuth: boolean,
+    errorAuth: string | null,
+    captchaUrl: string | null
+};
+let initialState: initialStateType = {
     id: null,
     email: null,
     login: null,
@@ -17,7 +26,7 @@ let initialState = {
 };
 
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
         case SET_CAPTCHA_URL : {
@@ -37,22 +46,47 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
+type setUserDataActionTypePayload = {
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean,
+    errorAuth: string | null,
+    captchaUrl: string | null
+}
+type setUserDataActionType = {
+        type: typeof SET_USER_DATA,
+        payload:setUserDataActionTypePayload
+    };
+export const setUserData = (id: number|null, email: string|null, login: string|null, isAuth: boolean, captchaUrl: string|null, errorAuth: string|  null):setUserDataActionType => ({
+    type: SET_USER_DATA,
+    payload: {id, email, login, isAuth, captchaUrl, errorAuth}
+});
 
-export const setUserData = (id, email, login, isAuth,captchaUrl,errorAuth) => ({type: SET_USER_DATA, payload: {id, email, login, isAuth,captchaUrl,errorAuth}});
-export const setAuthError = (errorMessages) => ({type: SET_ERROR, payload: errorMessages});
-export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, payload: {captchaUrl}});
+type setAuthErrorActionType = {
+    type: typeof SET_ERROR,
+    payload: { errorMessages: string }};
+export const setAuthError = (errorMessages:string):setAuthErrorActionType => ({
+    type: SET_ERROR, payload: {errorMessages}
+});
 
-export const getAuthUserDataThunk = () => async (dispatch) => {
+type setCaptchaUrlActionType= {
+    type:typeof SET_CAPTCHA_URL,
+    payload: {captchaUrl:string}
+}
+export const setCaptchaUrl = (captchaUrl:string):setCaptchaUrlActionType => ({type: SET_CAPTCHA_URL, payload: {captchaUrl}});
+
+export const getAuthUserDataThunk = () => async (dispatch:any) => {
     const response = await authMeApi.auth()
     if (response.data.resultCode === 0) {
         let {id, email, login} = response.data.data;
-        dispatch(setUserData(id, email, login, true,null,null))
+        dispatch(setUserData(id, email, login, true, null, null))
     }
     dispatch(initializedSuccess())
 };
 
-export const loginThunk = (email, password, rememberMe,captcha) => async (dispatch) => {
-    const response = await authMeApi.login(email, password, rememberMe,captcha)
+export const loginThunk = (email:string, password:string, rememberMe:boolean, captcha:string) => async (dispatch:any) => {
+    const response = await authMeApi.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserDataThunk())
     } else if (response.data.resultCode === 10) {
@@ -64,16 +98,16 @@ export const loginThunk = (email, password, rememberMe,captcha) => async (dispat
         dispatch(setAuthError(errorMessages))
     }
 };
-export const getCaptchaUrlThunk = () => async (dispatch) => {
+export const getCaptchaUrlThunk = () => async (dispatch:any) => {
     const response = await securityApi.getCaptchaUrl()
     const captchaUrl = response.data.url
     dispatch(setCaptchaUrl(captchaUrl))
 };
 
-export const logoutThunk = () => async (dispatch) => {
+export const logoutThunk = () => async (dispatch:any) => {
     const response = await authMeApi.logout()
     if (response.data.resultCode === 0) {
-        dispatch(setUserData(null, null, null, false,null,null))
+        dispatch(setUserData(null, null, null, false, null, null))
     }
 };
 
