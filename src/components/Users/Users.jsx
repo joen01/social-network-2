@@ -78,7 +78,7 @@ let Users = (props) => {
                                                 followingInProgress={props.followingInProgress}
                                                 unfollowThunk={props.unfollowThunk}
                                                 followThunk={props.followThunk}
-                        />  ))
+                    />))
                 }
             </div>
         </div>

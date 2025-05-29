@@ -28,7 +28,7 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
             .map(p => (
                 <span
                     key={p}
-                    className={classNames (styles.pageCount, currentPage === p ? styles.selectedPage : '')}
+                    className={classNames(styles.pageCount, currentPage === p ? styles.selectedPage : '')}
                     onClick={() => {
                         onPageChanged(p);
                     }}

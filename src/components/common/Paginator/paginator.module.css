@@ -1,14 +1,16 @@
-.pageCount{
+.pageCount {
     padding: 2px;
     border-radius: 50%;
     color: #555555;
     border: 1px solid #ccc;
 }
+
 .selectedPage {
     font-weight: bold;
     font-size: 110%;
     border: 5px solid red;
 }
+
 .pagination {
     width: auto;
     text-align: left;
@@ -16,6 +18,17 @@
     margin: 10px auto;
 
 }
-.pagination button{
+
+.pagination button {
     border-radius: 40%;
+}
+
+.pagination button:hover {
+    background-color: crimson;
+}
+
+.pagination button:active {
+    transform: scale(0.8);
+    background-color: cornflowerblue;
+    color: #cccccc;
 }
