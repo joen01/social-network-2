@@ -16,16 +16,19 @@ export type ContactsType = {
     website: string
     youtube: string
     mainLink: string
-
+    [key: string]: string
 }
+
 export type ProfileType = {
+    aboutMe:string
     userId?: number | undefined
     lookingForAJob?: string
     lookingForAJobDescription?: string
     fullName: string
-    contacts?: ContactsType
+    contacts: ContactsType
     photos?: PhotosType
 }
+
 export type UserType = {
     id: number
     name: string

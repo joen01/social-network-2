@@ -1,18 +1,40 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
 import f from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "../ProfileStatuswithHooks";
 import ProfileDataForm from "./ProfileDataForm";
+import {ProfileType} from "src/Types/Types";
 
-const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, saveProfile,error}) => {
+
+type TypeProps = {
+    profile: ProfileType|null
+    status: string
+    isOwner: boolean
+    error: string|null
+    savePhoto: (file: any) => void
+    updateStatusThunk: (status: string) => void
+    saveProfile: (profile: ProfileType) => void
+}
+
+const ProfileInfo: React.FC<TypeProps> = ({
+                                              profile,
+                                              status,
+                                              updateStatusThunk,
+                                              isOwner,
+                                              savePhoto,
+                                              saveProfile,
+                                              error
+                                          }) => {
     let [editMode, setEditMode] = useState(false)
 
     if (!profile) {
         return <Preloader/>
     }
 
-    const onPhotoSelected = (e) => {
-        savePhoto(e.target.files[0])
+    const onPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            savePhoto(e.target.files[0])
+        }
     }
 
     return (
@@ -24,7 +46,7 @@ const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, sa
             </div>
             <div className={f.ava}>
                 <div className={f.container}>
-                    <img src={profile.photos.large ||
+                    <img src={profile.photos?.large ||
                         "https://pixelbox.ru/wp-content/uploads/2021/04/ava-mult-vk-7.jpg"} alt="User avatar"/>
                     {isOwner && <input type={"file"} onChange={onPhotoSelected} className={f.btn}/>}
                 </div>
@@ -38,14 +60,21 @@ const ProfileInfo = ({profile, status, updateStatusThunk, isOwner, savePhoto, sa
                 {editMode && <ProfileDataForm profile={profile}
                                               saveProfile={saveProfile}
                                               goToNotEditMode={() => {
-                                                  setEditMode(false)}}
+                                                  setEditMode(false)
+                                              }}
                                               error={error}/>}
             </div>
 
         </div>)
 }
-const ProfileData = ({profile, isOwner, goToEditMode}) => {
-    return <div>
+type TypePropsProfileData = {
+    profile: ProfileType
+    isOwner: boolean
+    goToEditMode: () => void
+    setEditMode: Dispatch<SetStateAction<boolean>>
+}
+const ProfileData: React.FC<TypePropsProfileData> = ({profile, isOwner, goToEditMode}) => {
+        return <div>
         <div className={f.fullName}>
             <b>{profile.fullName} </b>
         </div>
@@ -66,7 +95,7 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
         </div>
         <div>
             <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
-            return <Contact key={key} contactTitle={key} contactValues={profile.contacts[key]}/>
+                return <Contact key={key} contactTitle={key} contactValues={profile.contacts[key]}/>
         })}
         </div>
         {isOwner && <div>
@@ -75,7 +104,11 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
     </div>
 }
 
-export const Contact = ({contactTitle, contactValues}) => {
+type TypePropsContact = {
+    contactTitle: string
+    contactValues: string
+}
+export const Contact: React.FC<TypePropsContact> = ({contactTitle, contactValues}) => {
     if (contactValues == null) {
         contactValues = "---"
     }

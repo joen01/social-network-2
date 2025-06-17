@@ -91,12 +91,12 @@ export const setProfileError = (errorMessages: string | null): setProfileErrorAc
     errorMessages
 });
 
-export const getProfileThunk = (userId: number) => async (dispatch: any) => {
+export const getProfileThunk = (userId: number|null) => async (dispatch: any) => {
     let response = await usersApi.getProfile(userId)
     dispatch(setUsersProfile(response.data))
     ;
 }
-export const getStatusThunk = (userId: number) => async (dispatch: any) => {
+export const getStatusThunk = (userId: number|null) => async (dispatch: any) => {
     try {
         const response = await profileApi.getStatus(userId);
         dispatch(setStatus(response.data));
@@ -127,7 +127,7 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         console.error("ошибка отправки файла")
     }
 };
-export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: ProfileType|null) => async (dispatch: any, getState: any) => {
     try {
         const userId = getState().auth.id
         const response = await profileApi.updateProfile(profile)

@@ -6,8 +6,7 @@ import {
     setTotalUsersCount,
     toggleIsDisabled,
     unfollow,
-    unfollowThunk
-} from "../../Redux/Users-reducer";
+    unfollowThunk} from "src/Redux/Users-reducer";
 import Users from "./Users";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
@@ -17,16 +16,41 @@ import {
     getIsLoading,
     getPageSize,
     getTotalUsersCount,
-    getUsers
-} from "../../Redux/usersSelectors";
+    getUsers} from "src/Redux/usersSelectors";
+import {UserType} from "src/Types/Types";
+import {AppStateType} from "src/Redux/Redux-store";
 
+type MapStatePropsType = {
+    pageSize: number
+    currentPage: number
+    isLoading: boolean
+    totalUsersCount: number
+    users: Array<UserType>
+    followingInProgress: Array<number> // array user id
 
-class UsersContainer extends React.Component {
+}
+type MapDispatchPropsType = {
+    toggleIsDisabled:(progress:boolean, userId:number)=>void
+    follow:(userId:number)=>void
+    unfollow:(userId:number)=>void
+    getUsers: (currentPage: number, pageSize: number) => void
+    unfollowThunk: (userId:number, rest:any) => void
+    followThunk: (userId:number, rest:any) => void
+    setTotalUsersCount:(totalCount:number)=>void
+
+}
+type OwnPropsType = {
+}
+
+type PropsType =  MapStatePropsType & MapDispatchPropsType & OwnPropsType
+
+class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
-    onPageChanged = (pageNumber) => {
+    onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
@@ -63,7 +87,7 @@ class UsersContainer extends React.Component {
 //     }
 // }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType):MapStatePropsType => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -71,8 +95,6 @@ const mapStateToProps = (state) => {
         currentPage: getCurrentPage(state),
         isLoading: getIsLoading(state),
         followingInProgress: getFollowingInProgress(state)
-
-
     }
 }
 
@@ -105,7 +127,9 @@ const mapStateToProps = (state) => {
 // }
 
 
-export default connect(mapStateToProps, {
+export default
+//<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
+connect <MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     follow,
     unfollow,
     setTotalUsersCount,

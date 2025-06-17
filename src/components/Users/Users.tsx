@@ -61,10 +61,23 @@
 import React from "react";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
+import {UserType} from "src/Types/Types";
 
+type PropsType={
+    totalUsersCount:number
+    currentPage:number
+    pageSize:number
+    follow:(userId:number)=>void
+    unfollow:(userId:number)=>void
+    toggleIsDisabled:(progress:boolean, userId:number)=>void
+    users: Array<UserType>
+    followingInProgress:Array<number> // array user id
+    onPageChanged: (pageNumber:number)=>void
+    unfollowThunk: (userId:number, rest:any) => void
+    followThunk: (userId:number, rest:any) => void
 
-let Users = (props) => {
-
+}
+let Users:React.FC<PropsType> = (props) => {
     return (
         <div>
             <Paginator totalItemsCount={props.totalUsersCount}

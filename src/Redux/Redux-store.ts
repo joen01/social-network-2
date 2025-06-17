@@ -1,12 +1,12 @@
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import profileReducer from "./Profile-reducer";
 import dialogsReducer from "./Dialogs-reducer";
 import friendsReducer from "./Friends-reducer";
-import {combineReducers} from "@reduxjs/toolkit";
 import usersReducer from "./Users-reducer";
 import authReducer from "./Auth-reducer";
 import appReducer from "./App-reducer";
 
-let reducers = combineReducers({
+let RootReducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sadebar: friendsReducer,
@@ -14,7 +14,16 @@ let reducers = combineReducers({
     auth: authReducer,
     app: appReducer
 })
+type RootReducersType = typeof RootReducers
+export type AppStateType = ReturnType<RootReducersType>
 
 
+const store = configureStore({
+    reducer: RootReducers,
+});
 
-export default reducers
+// @ts-ignore
+window.store = store;
+
+
+export default store;
