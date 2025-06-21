@@ -60,7 +60,7 @@
 
 import React from "react";
 import Paginator from "../common/Paginator/Paginator";
-import User from "./User";
+import User from "src/components/Users/User";
 import {UserType} from "src/Types/Types";
 
 type PropsType={

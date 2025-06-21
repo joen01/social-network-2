@@ -2,7 +2,7 @@ import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
 import f from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "../ProfileStatuswithHooks";
-import ProfileDataForm from "./ProfileDataForm";
+import ProfileDataForm from "src/components/Profile/ProfileInfo/ProfileDataForm";
 import {ProfileType} from "src/Types/Types";
 
 
@@ -13,7 +13,7 @@ type TypeProps = {
     error: string|null
     savePhoto: (file: any) => void
     updateStatusThunk: (status: string) => void
-    saveProfile: (profile: ProfileType) => void
+    saveProfile: (profile: ProfileType) => object
 }
 
 const ProfileInfo: React.FC<TypeProps> = ({

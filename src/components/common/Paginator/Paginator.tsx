@@ -48,6 +48,9 @@ const Paginator: React.FC<PropsType> = ({totalItemsCount, pageSize, currentPage,
                     setNumberPortion(numberPortion + 1)
                 }}> NEXT
         </button>
+        <p>
+            <b> User count:</b> {totalItemsCount}
+        </p>
 
     </div>
 }

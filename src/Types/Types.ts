@@ -35,4 +35,9 @@ export type UserType = {
     status: string
     photos: PhotosType
     followed: boolean
+    location: LocationType
+}
+export type LocationType = {
+    city: string
+    country: string
 }

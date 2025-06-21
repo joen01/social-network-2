@@ -3,14 +3,22 @@ import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import {createFormControl} from "../../formControl/FormControl";
 import f from "../MyPosts/MyPosts.module.css";
+import {ProfileType} from "src/Types/Types";
 
-const ProfileDataForm = ({profile, saveProfile, goToNotEditMode,error}) => {
+
+type PropsType = {
+    profile:ProfileType
+    error:string|null
+    saveProfile: (profile: ProfileType) => object
+    goToNotEditMode:() => void
+}
+const ProfileDataForm:React.FC<PropsType> = ({profile, saveProfile, goToNotEditMode,error}) => {
 
     const initialValues = {
         fullName: profile.fullName || "--",
         contacts: profile.contacts || {},
         aboutMe: profile.aboutMe || "--",
-        lookingForAJob: profile.lookingForAJob || false,
+        lookingForAJob: profile.lookingForAJob || undefined,
         lookingForAJobDescription: profile.lookingForAJobDescription || "--",
     };
 
@@ -33,7 +41,7 @@ const ProfileDataForm = ({profile, saveProfile, goToNotEditMode,error}) => {
                     setErrors(errorMessages); // Устанавливаем ошибки в соответствии со структурой
                 } else {
                     goToNotEditMode();
-                    setErrors("")
+                    setErrors({})
                 }
             }}
         >

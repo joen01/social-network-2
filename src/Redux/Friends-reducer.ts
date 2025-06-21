@@ -6,7 +6,7 @@ type FriendsType = {
     id:number
     name: string
     followed: boolean
-    photo:any
+    photo:string
 }
 
 let initialState = {
@@ -19,7 +19,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const friendsReducer = (state = initialState, action:any):InitialStateType => {
+const friendsReducer = (state = initialState, action:ActionType):InitialStateType => {
     switch (action.type) {
         case ADD_FRIENDS : {
             return {
@@ -47,15 +47,17 @@ const friendsReducer = (state = initialState, action:any):InitialStateType => {
             return state;
     }
 }
-type addFriendsACActionType = {
+type ActionType = AddFriendsACActionType|RemoveFriendsACActionType
+
+type AddFriendsACActionType = {
     type: typeof ADD_FRIENDS,
     userId:number
 };
-type removeFriendsACActionType = {
+type RemoveFriendsACActionType = {
     type: typeof REMOVE_FRIENDS,
     userId:number
 };
-export const addFriendsAC = (userId:number):addFriendsACActionType => ({type: ADD_FRIENDS, userId});
-export const removeFriendsAC = (userId:number):removeFriendsACActionType => ({type: REMOVE_FRIENDS, userId});
+export const addFriendsAC = (userId:number):AddFriendsACActionType => ({type: ADD_FRIENDS, userId});
+export const removeFriendsAC = (userId:number):RemoveFriendsACActionType => ({type: REMOVE_FRIENDS, userId});
 
 export default friendsReducer

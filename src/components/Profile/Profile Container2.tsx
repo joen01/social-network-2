@@ -14,7 +14,7 @@ type MapDispatchPropsType = {
     getProfileThunk: (userId: number|null) => void
     getStatusThunk: (userId: number|null) => void
     savePhoto: (file: any) => void
-    saveProfile: (profile: ProfileType|null) => void
+    saveProfile: (profile: ProfileType|null) => object
 }
 
 type MapStatePropsType = {

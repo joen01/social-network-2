@@ -11,8 +11,9 @@ type TypeProps = {
     error:string|null
     savePhoto:(file: any)=>void
     updateStatusThunk:(status: string)=>void
-    saveProfile:(file: any)=>void
+    saveProfile: (profile: ProfileType|null) => object
 }
+
 const Profile: React.FC<TypeProps> = ({profile, status, updateStatusThunk, isOwner, savePhoto, saveProfile,error}) => {
     if (!profile) {
         return <Preloader/>

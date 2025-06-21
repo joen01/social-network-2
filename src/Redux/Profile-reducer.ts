@@ -1,5 +1,7 @@
 import {profileApi, usersApi} from "../Api/API";
 import {PhotosType, PostsType, ProfileType} from "../Types/Types";
+import {ThunkAction} from "@reduxjs/toolkit";
+import {AppStateType} from "src/Redux/Redux-store";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -24,7 +26,7 @@ let initialState = {
 };
 export  type initialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): initialStateType => {
+const profileReducer = (state = initialState, action: ActionType): initialStateType => {
     switch (action.type) {
         case ADD_POST: {
             const newPost = {id: state.nextId, message: action.values, like: "like 0"};
@@ -53,6 +55,8 @@ const profileReducer = (state = initialState, action: any): initialStateType => 
             return state;
     }
 };
+
+type ActionType = addPostActionType|setUsersProfileActionType|setStatusActionType|deletePostActionType|setPhotosSuccessActionType|setProfileErrorActionType
 
 type addPostActionType = {
     type: typeof ADD_POST
@@ -91,12 +95,14 @@ export const setProfileError = (errorMessages: string | null): setProfileErrorAc
     errorMessages
 });
 
-export const getProfileThunk = (userId: number|null) => async (dispatch: any) => {
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
+
+export const getProfileThunk = (userId: number|null):ThunkType => async (dispatch) => {
     let response = await usersApi.getProfile(userId)
     dispatch(setUsersProfile(response.data))
     ;
 }
-export const getStatusThunk = (userId: number|null) => async (dispatch: any) => {
+export const getStatusThunk = (userId: number|null):ThunkType => async (dispatch) => {
     try {
         const response = await profileApi.getStatus(userId);
         dispatch(setStatus(response.data));
@@ -105,7 +111,7 @@ export const getStatusThunk = (userId: number|null) => async (dispatch: any) => 
     }
 };
 
-export const updateStatusThunk = (status: string) => async (dispatch: any) => {
+export const updateStatusThunk = (status: string):ThunkType => async (dispatch) => {
     try {
         const response = await profileApi.updateStatus(status)
         if (response.data.resultCode === 0) {
@@ -117,7 +123,7 @@ export const updateStatusThunk = (status: string) => async (dispatch: any) => {
     }
 };
 
-export const savePhoto = (file: any) => async (dispatch: any) => {
+export const savePhoto = (file: any):ThunkType => async (dispatch) => {
     try {
         const response = await profileApi.savePhotos(file)
         if (response.data.resultCode === 0) {
@@ -127,7 +133,7 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         console.error("ошибка отправки файла")
     }
 };
-export const saveProfile = (profile: ProfileType|null) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: ProfileType|null):ThunkType => async (dispatch, getState) => {
     try {
         const userId = getState().auth.id
         const response = await profileApi.updateProfile(profile)
