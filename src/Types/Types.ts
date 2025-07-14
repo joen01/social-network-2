@@ -41,3 +41,19 @@ export type LocationType = {
     city: string
     country: string
 }
+
+export type DialogsPageType = {
+    dialogs: Array <DialogsType>,
+    messages: Array <MessagesType>,
+    nextId:number
+}
+
+export type DialogsType = {
+    id: number,
+    name: string
+}
+
+export type MessagesType = {
+    id: number,
+    message: string
+}

@@ -1,4 +1,4 @@
-import {authMeApi, securityApi} from "../Api/API";
+import {authMeApi, securityApi, ResultCodeEnum, ResultCodeCaptcha} from "src/Api/API";
 import {initializedSuccess, InitializedSuccessActionType} from "./App-reducer";
 import {ThunkAction} from "@reduxjs/toolkit";
 import {AppStateType} from "src/Redux/Redux-store";
@@ -89,24 +89,24 @@ export const setCaptchaUrl = (captchaUrl: string): setCaptchaUrlActionType => ({
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
 
 export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
-    const response = await authMeApi.auth()
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data;
+    const meData = await authMeApi.auth()
+    if (meData.resultCode === ResultCodeEnum.Success) {
+        let {id, email, login} = meData.data;
         dispatch(setUserData(id, email, login, true, null, null))
     }
     dispatch(initializedSuccess())
 };
 
 export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async (dispatch) => {
-    const response = await authMeApi.login(email, password, rememberMe, captcha)
-    if (response.data.resultCode === 0) {
+    const data = await authMeApi.login(email, password, rememberMe, captcha)
+    if (data.resultCode === ResultCodeEnum.Success) {
         dispatch(getAuthUserDataThunk())
-    } else if (response.data.resultCode === 10) {
+    } else if (data.resultCode === ResultCodeCaptcha.Captcha) {
         dispatch(getCaptchaUrlThunk())
-        let errorMessages = response.data.messages[0]
+        let errorMessages = data.messages[0]
         dispatch(setAuthError(errorMessages))
     } else {
-        let errorMessages = response.data.messages.length > 0 ? response.data.messages[0] : "Some Error"
+        let errorMessages = data.messages.length > 0 ? data.messages[0] : "Some Error"
         dispatch(setAuthError(errorMessages))
     }
 };
@@ -117,8 +117,8 @@ export const getCaptchaUrlThunk = (): ThunkType => async (dispatch) => {
 };
 
 export const logoutThunk = (): ThunkType => async (dispatch) => {
-    const response = await authMeApi.logout()
-    if (response.data.resultCode === 0) {
+    const data = await authMeApi.logout()
+    if (data.resultCode === ResultCodeEnum.Success) {
         dispatch(setUserData(null, null, null, false, null, null))
     }
 };

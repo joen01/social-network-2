@@ -1,4 +1,4 @@
-import {usersApi} from "../Api/API";
+import {usersApi} from "src/Api/API";
 import {updateObjectInArray} from "../utils/object-helpers";
 import {UserType} from "../Types/Types";
 import {Dispatch, ThunkAction} from "@reduxjs/toolkit";

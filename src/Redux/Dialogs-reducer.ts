@@ -1,13 +1,6 @@
+import {DialogsType,MessagesType} from "src/Types/Types";
 const ADD_MES = "ADD-MES";
 
-type dialogsType = {
-    id: number
-    name: string
-}
-type messageType = {
-    id: number
-    message: string
-}
 
 let initialState = {
     dialogs: [
@@ -17,7 +10,7 @@ let initialState = {
         {id: 4, name: "Andrey"},
         {id: 5, name: "Sveta"},
         {id: 6, name: "Evgeny"}
-    ] as Array <dialogsType>,
+    ] as Array <DialogsType>,
     messages: [
         {id: 1, message: "Hello"},
         {id: 2, message: "Привет"},
@@ -25,7 +18,7 @@ let initialState = {
         {id: 4, message: "Hello. How are you"},
         {id: 5, message: "Yooo"},
         {id: 6, message: "Привет. ты не знаешь где кот?"}
-    ] as Array <messageType>,
+    ] as Array <MessagesType>,
     nextId: 7
 };
 

@@ -1,4 +1,4 @@
-import {profileApi, usersApi} from "../Api/API";
+import {profileApi, usersApi} from "src/Api/API";
 import {PhotosType, PostsType, ProfileType} from "../Types/Types";
 import {ThunkAction} from "@reduxjs/toolkit";
 import {AppStateType} from "src/Redux/Redux-store";
