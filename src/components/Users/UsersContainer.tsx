@@ -1,11 +1,8 @@
 import {connect} from "react-redux";
 import {
-    follow,
+    actions,
     followThunk,
     requestUsers,
-    setTotalUsersCount,
-    toggleIsDisabled,
-    unfollow,
     unfollowThunk} from "src/Redux/Users-reducer";
 import Users from "./Users";
 import React from "react";
@@ -130,10 +127,10 @@ const mapStateToProps = (state: AppStateType):MapStatePropsType => {
 export default
 //<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
 connect <MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
-    follow,
-    unfollow,
-    setTotalUsersCount,
-    toggleIsDisabled,
+    follow: actions.follow,
+    unfollow:actions.unfollow,
+    setTotalUsersCount:actions.setTotalUsersCount,
+    toggleIsDisabled: actions.toggleIsDisabled,
     getUsers: requestUsers,
     followThunk,
     unfollowThunk

@@ -1,7 +1,8 @@
-import {profileApi, usersApi} from "src/Api/API";
 import {PhotosType, PostsType, ProfileType} from "../Types/Types";
 import {ThunkAction} from "@reduxjs/toolkit";
 import {AppStateType} from "src/Redux/Redux-store";
+import {usersApi} from "src/Api/UsersApi";
+import {profileApi} from "src/Api/ProfileApi";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";

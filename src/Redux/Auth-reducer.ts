@@ -1,7 +1,9 @@
-import {authMeApi, securityApi, ResultCodeEnum, ResultCodeCaptcha} from "src/Api/API";
+import {ResultCodeEnum, ResultCodeCaptcha} from "src/Api/API";
 import {initializedSuccess, InitializedSuccessActionType} from "./App-reducer";
 import {ThunkAction} from "@reduxjs/toolkit";
 import {AppStateType} from "src/Redux/Redux-store";
+import {authMeApi} from "src/Api/AuthMeApi";
+import {securityApi} from "src/Api/SecurityApi";
 
 const SET_USER_DATA = "samurai-network/auth/SET_USER_DATA";
 const SET_ERROR = "samurai-network/auth/SET_ERROR";

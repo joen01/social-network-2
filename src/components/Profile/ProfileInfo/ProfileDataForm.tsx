@@ -13,6 +13,7 @@ type PropsType = {
     goToNotEditMode: () => void
 }
 
+
 const ProfileDataForm: React.FC<PropsType> = ({profile, saveProfile, goToNotEditMode, error}) => {
 
     const initialValues:ProfileType = {
@@ -35,7 +36,8 @@ const ProfileDataForm: React.FC<PropsType> = ({profile, saveProfile, goToNotEdit
         }),
     });
 
-    return (
+    // @ts-ignore
+     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -50,8 +52,10 @@ const ProfileDataForm: React.FC<PropsType> = ({profile, saveProfile, goToNotEdit
                 }
             }}
         >
+
             {({handleSubmit, errors, touched, values}) => (
                 <Form onSubmit={handleSubmit}>
+
                     {createFormControl("fullName", "input", errors, touched, "FullName", "", "Full name")}
                     {createFormControl("aboutMe", "input", errors, touched, "About me", "", "About me")}
                     {createFormControl("lookingForAJob", "", errors, touched, "", "checkbox", "looking For A Job")}
