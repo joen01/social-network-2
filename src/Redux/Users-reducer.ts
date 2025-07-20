@@ -1,7 +1,7 @@
 import {updateObjectInArray} from "../utils/object-helpers";
 import {UserType} from "../Types/Types";
-import {Dispatch, ThunkAction} from "@reduxjs/toolkit";
-import {AppStateType, InferActionType} from "src/Redux/Redux-store";
+import {Dispatch} from "@reduxjs/toolkit";
+import {InferActionType, BaseThunkType} from "src/Redux/Redux-store";
 import {usersApi} from "src/Api/UsersApi";
 
 
@@ -15,6 +15,8 @@ let initialState = {
 };
 
 type InitialStateType = typeof initialState
+type ActionType = InferActionType<typeof userActions>
+type DispatchType = Dispatch<ActionType>
 
 const usersReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
@@ -54,10 +56,8 @@ const usersReducer = (state = initialState, action: ActionType): InitialStateTyp
             return state;
     }
 };
-// type ActionType = ReturnType<InferActionType<typeof actions>>
-type ActionType = InferActionType<typeof actions>
 
-export const actions = {
+export const userActions = {
     follow: (userId: number) => ({type: "FOLLOW", userId} as const),
     unfollow: (userId: number) => ({type: "UNFOLLOW", userId} as const),
     setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users} as const),
@@ -67,38 +67,32 @@ export const actions = {
     toggleIsDisabled: (progress: boolean, userId: number) => ({type: "TOGGLE_IS_DISABLED", progress, userId} as const),
 }
 
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
-type DispatchType = Dispatch<ActionType>
-
-export const requestUsers = (page: number, pageSize: number): ThunkType => {
+export const requestUsers = (page: number, pageSize: number): BaseThunkType<ActionType> => {
     return async (dispatch) => {
-        dispatch(actions.toggleIsLoading(true));
-        dispatch(actions.setCurrentPage(page));
+        dispatch(userActions.toggleIsLoading(true));
+        dispatch(userActions.setCurrentPage(page));
         let data = await usersApi.getUsers(page, pageSize)
-        dispatch(actions.toggleIsLoading(false));
-        dispatch(actions.setUsers(data.items));
-        dispatch(actions.setTotalUsersCount(data.totalCount))
+        dispatch(userActions.toggleIsLoading(false));
+        dispatch(userActions.setUsers(data.items));
+        dispatch(userActions.setTotalUsersCount(data.totalCount))
     }
 };
-
-const _followUnFollowFlow = async (dispatch: DispatchType, userId: number, rest: any, creator: (user: number) => ActionType) => {
-    dispatch(actions.toggleIsDisabled(true, userId))
+const _followUnFollowFlow = async (dispatch: DispatchType, userId: number, rest: "post" | "delete", creator: (user: number) => ActionType) => {
+    dispatch(userActions.toggleIsDisabled(true, userId))
     let data = await usersApi.followUsers(userId, rest)
     if (data.resultCode === 0) {
         dispatch(creator(userId))
     }
-    dispatch(actions.toggleIsDisabled(false, userId))
+    dispatch(userActions.toggleIsDisabled(false, userId))
 }
-
-export const followThunk = (userId: number, rest: any): ThunkType => {
+export const followThunk = (userId: number, rest: "post" | "delete"): BaseThunkType<ActionType>  => {
     return async (dispatch) => {
-        await _followUnFollowFlow(dispatch, userId, rest, actions.follow)
+        await _followUnFollowFlow(dispatch, userId, rest, userActions.follow)
     }
 };
-
-export const unfollowThunk = (userId: number, rest: any): ThunkType => {
+export const unfollowThunk = (userId: number, rest: "post" | "delete"): BaseThunkType<ActionType>  => {
     return async (dispatch) => {
-        await _followUnFollowFlow(dispatch, userId, rest, actions.unfollow)
+        await _followUnFollowFlow(dispatch, userId, rest, userActions.unfollow)
     }
 };
 

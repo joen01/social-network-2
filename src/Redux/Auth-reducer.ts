@@ -1,45 +1,32 @@
-import {ResultCodeEnum, ResultCodeCaptcha} from "src/Api/API";
-import {initializedSuccess, InitializedSuccessActionType} from "./App-reducer";
-import {ThunkAction} from "@reduxjs/toolkit";
-import {AppStateType} from "src/Redux/Redux-store";
+import {ResultCodeCaptcha, ResultCodeEnum} from "src/Api/API";
+import {appActions, AppActionType} from "./App-reducer";
+import {BaseThunkType, InferActionType} from "src/Redux/Redux-store";
 import {authMeApi} from "src/Api/AuthMeApi";
 import {securityApi} from "src/Api/SecurityApi";
 
-const SET_USER_DATA = "samurai-network/auth/SET_USER_DATA";
-const SET_ERROR = "samurai-network/auth/SET_ERROR";
-const SET_CAPTCHA_URL = "samurai-network/auth/SET_CAPTCHA_URL";
-
-
-type initialStateType = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isLoading: boolean,
-    isAuth: boolean,
-    errorAuth: string | null,
-    captchaUrl: string | null
-};
-let initialState: initialStateType = {
-    id: null,
-    email: null,
-    login: null,
+let initialState = {
+    id: null as number |null,
+    email: null as string |null,
+    login: null as string |null,
     isLoading: false,
     isAuth: false,
-    errorAuth: null,
-    captchaUrl: null
+    errorAuth: null as string |null,
+    captchaUrl: null as string |null
 };
+type InitialStateType = typeof initialState;
+export type authActionType = InferActionType<typeof authActions>
+type ThunkType = BaseThunkType<authActionType|AppActionType>
 
-
-const authReducer = (state = initialState, action: ActionType): initialStateType => {
+const authReducer = (state = initialState, action: authActionType): InitialStateType => {
     switch (action.type) {
-        case SET_USER_DATA:
-        case SET_CAPTCHA_URL : {
+        case "samurai-network/auth/SET_USER_DATA":
+        case "samurai-network/auth/SET_CAPTCHA_URL" : {
             return {
                 ...state,
                 ...action.payload,
             }
         }
-        case SET_ERROR: {
+        case "samurai-network/auth/SET_ERROR": {
             return {
                 ...state,
                 errorAuth: action.payload,
@@ -50,55 +37,28 @@ const authReducer = (state = initialState, action: ActionType): initialStateType
     }
 };
 
-
-type ActionType = setUserDataActionType | setAuthErrorActionType | setCaptchaUrlActionType|InitializedSuccessActionType
-
-type setUserDataActionTypePayload = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    errorAuth: string | null,
-    captchaUrl: string | null
+export const authActions = {
+    setUserData: (id: number | null, email: string | null, login: string | null, isAuth: boolean, captchaUrl: string | null, errorAuth: string | null) => ({
+        type: "samurai-network/auth/SET_USER_DATA", payload: {id, email, login, isAuth, captchaUrl, errorAuth}
+    } as const),
+    setAuthError: (errorMessages: string | null) => ({
+        type: "samurai-network/auth/SET_ERROR",
+        payload: errorMessages
+    } as const),
+    setCaptchaUrl: (captchaUrl: string) => ({
+        type: "samurai-network/auth/SET_CAPTCHA_URL",
+        payload: {captchaUrl}
+    } as const),
 }
-type setUserDataActionType = {
-    type: typeof SET_USER_DATA,
-    payload: setUserDataActionTypePayload
-};
-export const setUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean, captchaUrl: string | null, errorAuth: string | null): setUserDataActionType => ({
-    type: SET_USER_DATA,
-    payload: {id, email, login, isAuth, captchaUrl, errorAuth}
-});
-
-type setAuthErrorActionType = {
-    type: typeof SET_ERROR,
-    payload: string | null
-}
-export const setAuthError = (errorMessages: string | null): setAuthErrorActionType => ({
-    type: SET_ERROR, payload: errorMessages
-});
-
-type setCaptchaUrlActionType = {
-    type: typeof SET_CAPTCHA_URL,
-    payload: { captchaUrl: string }
-}
-export const setCaptchaUrl = (captchaUrl: string): setCaptchaUrlActionType => ({
-    type: SET_CAPTCHA_URL,
-    payload: {captchaUrl}
-});
-
-
-type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
 
 export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
     const meData = await authMeApi.auth()
     if (meData.resultCode === ResultCodeEnum.Success) {
         let {id, email, login} = meData.data;
-        dispatch(setUserData(id, email, login, true, null, null))
+        dispatch(authActions.setUserData(id, email, login, true, null, null))
     }
-    dispatch(initializedSuccess())
+    dispatch(appActions.initializedSuccess())
 };
-
 export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async (dispatch) => {
     const data = await authMeApi.login(email, password, rememberMe, captcha)
     if (data.resultCode === ResultCodeEnum.Success) {
@@ -106,22 +66,21 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean,
     } else if (data.resultCode === ResultCodeCaptcha.Captcha) {
         dispatch(getCaptchaUrlThunk())
         let errorMessages = data.messages[0]
-        dispatch(setAuthError(errorMessages))
+        dispatch(authActions.setAuthError(errorMessages))
     } else {
         let errorMessages = data.messages.length > 0 ? data.messages[0] : "Some Error"
-        dispatch(setAuthError(errorMessages))
+        dispatch(authActions.setAuthError(errorMessages))
     }
 };
 export const getCaptchaUrlThunk = (): ThunkType => async (dispatch) => {
     const response = await securityApi.getCaptchaUrl()
     const captchaUrl = response.data.url
-    dispatch(setCaptchaUrl(captchaUrl))
+    dispatch(authActions.setCaptchaUrl(captchaUrl))
 };
-
 export const logoutThunk = (): ThunkType => async (dispatch) => {
     const data = await authMeApi.logout()
     if (data.resultCode === ResultCodeEnum.Success) {
-        dispatch(setUserData(null, null, null, false, null, null))
+        dispatch(authActions.setUserData(null, null, null, false, null, null))
     }
 };
 

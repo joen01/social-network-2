@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UserType} from "src/Types/Types";
 
 export  const instance = axios.create({
     withCredentials: true,
@@ -15,4 +16,14 @@ export enum ResultCodeEnum {
 export enum ResultCodeCaptcha {
     Captcha = 10
 }
-
+export  type GetItemsType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string
+}
+export type ResponseType <D = {}, RC = ResultCodeEnum> = {
+    resultCode: RC
+    messages: Array<string>,
+    data: D
+    fieldsErrors: []
+}

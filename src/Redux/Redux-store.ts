@@ -1,4 +1,4 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {Action, combineReducers, configureStore, ThunkAction} from "@reduxjs/toolkit";
 import profileReducer from "./Profile-reducer";
 import dialogsReducer from "./Dialogs-reducer";
 import friendsReducer from "./Friends-reducer";
@@ -20,6 +20,8 @@ export type AppStateType = ReturnType<RootReducersType>
 type PropertiesTypes<T> = T extends {[key: string]:infer U} ? U: never
 export  type InferActionType<T extends {[key: string]:( ...args: any[]) => any} > =  ReturnType<PropertiesTypes<T>>
 // export  type InferActionType<T> = T extends {[key: string]:infer U} ? U: never
+
+export type BaseThunkType<A extends Action,P = Promise<void>> = ThunkAction<P, AppStateType, unknown, A>
 
 const store = configureStore({
     reducer: RootReducers,
