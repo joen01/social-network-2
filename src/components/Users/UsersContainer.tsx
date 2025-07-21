@@ -24,7 +24,6 @@ type MapStatePropsType = {
     totalUsersCount: number
     users: Array<UserType>
     followingInProgress: Array<number> // array user id
-
 }
 type MapDispatchPropsType = {
     toggleIsDisabled:(progress:boolean, userId:number)=>void
@@ -34,7 +33,6 @@ type MapDispatchPropsType = {
     unfollowThunk: (userId:number, rest:any) => void
     followThunk: (userId:number, rest:any) => void
     setTotalUsersCount:(totalCount:number)=>void
-
 }
 type OwnPropsType = {
 }
@@ -46,12 +44,9 @@ class UsersContainer extends React.Component<PropsType> {
         const {currentPage, pageSize} = this.props
         this.props.getUsers(currentPage, pageSize)
     }
-
     onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
     }
-
-
     render() {
         return <>
             {this.props.isLoading ? <Preloader/> : null}
@@ -68,9 +63,7 @@ class UsersContainer extends React.Component<PropsType> {
                    followThunk={this.props.followThunk}/>
         </>
     }
-
 }
-
 // const mapStateToProps = (state) => {
 //     return {
 //         users: state.usersPage.users,

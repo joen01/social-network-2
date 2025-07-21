@@ -1,12 +1,10 @@
-const ADD_FRIENDS = "ADD-FRIENDS";
-const REMOVE_FRIENDS = "REMOVE-FRIENDS";
+import {InferActionType} from "src/Redux/Redux-store";
 
-
-type FriendsType = {
+export type FriendsType = {
     id:number
     name: string
-    followed: boolean
-    photo:string
+    followed?: boolean
+    photo?:string
 }
 
 let initialState = {
@@ -19,9 +17,9 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const friendsReducer = (state = initialState, action:ActionType):InitialStateType => {
+const friendsReducer = (state = initialState, action:friendsActionType):InitialStateType => {
     switch (action.type) {
-        case ADD_FRIENDS : {
+        case "SN/FRIENDS/ADD-FRIENDS" : {
             return {
                 ...state,
                 friends: state.friends.map(u => {
@@ -32,7 +30,7 @@ const friendsReducer = (state = initialState, action:ActionType):InitialStateTyp
                 })
             }
         }
-        case REMOVE_FRIENDS : {
+        case "SN/FRIENDS/REMOVE-FRIENDS" : {
             return {
                 ...state,
                 friends: state.friends.map(u => {
@@ -47,17 +45,11 @@ const friendsReducer = (state = initialState, action:ActionType):InitialStateTyp
             return state;
     }
 }
-type ActionType = AddFriendsACActionType|RemoveFriendsACActionType
+type friendsActionType = InferActionType<typeof friendsAction>
 
-type AddFriendsACActionType = {
-    type: typeof ADD_FRIENDS,
-    userId:number
-};
-type RemoveFriendsACActionType = {
-    type: typeof REMOVE_FRIENDS,
-    userId:number
-};
-export const addFriendsAC = (userId:number):AddFriendsACActionType => ({type: ADD_FRIENDS, userId});
-export const removeFriendsAC = (userId:number):RemoveFriendsACActionType => ({type: REMOVE_FRIENDS, userId});
+export  const friendsAction = {
+    addFriendsAC: (userId:number)=> ({type: "SN/FRIENDS/ADD-FRIENDS", userId} as const),
+    removeFriendsAC: (userId:number) => ({type: "SN/FRIENDS/REMOVE-FRIENDS", userId}as const)
+}
 
 export default friendsReducer

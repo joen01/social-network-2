@@ -19,14 +19,14 @@ type ThunkType = BaseThunkType<authActionType|AppActionType>
 
 const authReducer = (state = initialState, action: authActionType): InitialStateType => {
     switch (action.type) {
-        case "samurai-network/auth/SET_USER_DATA":
-        case "samurai-network/auth/SET_CAPTCHA_URL" : {
+        case "SN/AUTH/SET_USER_DATA":
+        case "SN/AUTH/SET_CAPTCHA_URL" : {
             return {
                 ...state,
                 ...action.payload,
             }
         }
-        case "samurai-network/auth/SET_ERROR": {
+        case "SN/AUTH/SET_ERROR": {
             return {
                 ...state,
                 errorAuth: action.payload,
@@ -39,14 +39,14 @@ const authReducer = (state = initialState, action: authActionType): InitialState
 
 export const authActions = {
     setUserData: (id: number | null, email: string | null, login: string | null, isAuth: boolean, captchaUrl: string | null, errorAuth: string | null) => ({
-        type: "samurai-network/auth/SET_USER_DATA", payload: {id, email, login, isAuth, captchaUrl, errorAuth}
+        type: "SN/AUTH/SET_USER_DATA", payload: {id, email, login, isAuth, captchaUrl, errorAuth}
     } as const),
     setAuthError: (errorMessages: string | null) => ({
-        type: "samurai-network/auth/SET_ERROR",
+        type: "SN/AUTH/SET_ERROR",
         payload: errorMessages
     } as const),
     setCaptchaUrl: (captchaUrl: string) => ({
-        type: "samurai-network/auth/SET_CAPTCHA_URL",
+        type: "SN/AUTH/SET_CAPTCHA_URL",
         payload: {captchaUrl}
     } as const),
 }

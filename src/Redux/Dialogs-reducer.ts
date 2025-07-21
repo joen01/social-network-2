@@ -1,6 +1,5 @@
-import {DialogsType,MessagesType} from "src/Types/Types";
-const ADD_MES = "ADD-MES";
-
+import {DialogsType, MessagesType} from "src/Types/Types";
+import {InferActionType} from "src/Redux/Redux-store";
 
 let initialState = {
     dialogs: [
@@ -24,9 +23,9 @@ let initialState = {
 
 export type initialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: AddMesActionCreatorType): initialStateType => {
+const dialogsReducer = (state = initialState, action: authActionType): initialStateType => {
     switch (action.type) {
-        case ADD_MES: {
+        case "SN/DIALOGS/ADD-MES": {
             const newMes = {id: state.nextId, message: action.values};
             return {
                 ...state,
@@ -39,10 +38,10 @@ const dialogsReducer = (state = initialState, action: AddMesActionCreatorType): 
     }
 };
 
-type AddMesActionCreatorType = {
-    type: typeof ADD_MES,
-    values: string
+export type authActionType = InferActionType<typeof dialogAction>
+
+export const dialogAction = {
+    addMesActionCreator: (values: string) => ({type: "SN/DIALOGS/ADD-MES", values: values} as const)
 }
-export const addMesActionCreator = (values: string):AddMesActionCreatorType => ({type: ADD_MES, values: values});
 
 export default dialogsReducer
