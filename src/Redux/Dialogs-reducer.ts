@@ -23,7 +23,7 @@ let initialState = {
 
 export type initialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: authActionType): initialStateType => {
+const dialogsReducer = (state = initialState, action: ActionType): initialStateType => {
     switch (action.type) {
         case "SN/DIALOGS/ADD-MES": {
             const newMes = {id: state.nextId, message: action.values};
@@ -38,7 +38,7 @@ const dialogsReducer = (state = initialState, action: authActionType): initialSt
     }
 };
 
-export type authActionType = InferActionType<typeof dialogAction>
+export type ActionType = InferActionType<typeof dialogAction>
 
 export const dialogAction = {
     addMesActionCreator: (values: string) => ({type: "SN/DIALOGS/ADD-MES", values: values} as const)

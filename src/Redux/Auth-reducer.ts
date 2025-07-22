@@ -13,11 +13,8 @@ let initialState = {
     errorAuth: null as string |null,
     captchaUrl: null as string |null
 };
-type InitialStateType = typeof initialState;
-export type authActionType = InferActionType<typeof authActions>
-type ThunkType = BaseThunkType<authActionType|AppActionType>
 
-const authReducer = (state = initialState, action: authActionType): InitialStateType => {
+const authReducer = (state = initialState, action: AuthActionType): InitialStateType => {
     switch (action.type) {
         case "SN/AUTH/SET_USER_DATA":
         case "SN/AUTH/SET_CAPTCHA_URL" : {
@@ -39,16 +36,9 @@ const authReducer = (state = initialState, action: authActionType): InitialState
 
 export const authActions = {
     setUserData: (id: number | null, email: string | null, login: string | null, isAuth: boolean, captchaUrl: string | null, errorAuth: string | null) => ({
-        type: "SN/AUTH/SET_USER_DATA", payload: {id, email, login, isAuth, captchaUrl, errorAuth}
-    } as const),
-    setAuthError: (errorMessages: string | null) => ({
-        type: "SN/AUTH/SET_ERROR",
-        payload: errorMessages
-    } as const),
-    setCaptchaUrl: (captchaUrl: string) => ({
-        type: "SN/AUTH/SET_CAPTCHA_URL",
-        payload: {captchaUrl}
-    } as const),
+        type: "SN/AUTH/SET_USER_DATA", payload: {id, email, login, isAuth, captchaUrl, errorAuth}} as const),
+    setAuthError: (errorMessages: string | null) => ({type: "SN/AUTH/SET_ERROR", payload: errorMessages} as const),
+    setCaptchaUrl: (captchaUrl: string) => ({type: "SN/AUTH/SET_CAPTCHA_URL", payload: {captchaUrl}} as const),
 }
 
 export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
@@ -85,6 +75,10 @@ export const logoutThunk = (): ThunkType => async (dispatch) => {
 };
 
 export default authReducer
+
+type InitialStateType = typeof initialState;
+export type AuthActionType = InferActionType<typeof authActions>
+type ThunkType = BaseThunkType<AuthActionType|AppActionType>
 
 
 // import {authMeApi} from "../Api/API";

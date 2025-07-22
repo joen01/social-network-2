@@ -1,4 +1,4 @@
-import {updateObjectInArray} from "../utils/object-helpers";
+import {updateObjectInArray} from "src/utils/object-helpers";
 import {UserType} from "../Types/Types";
 import {Dispatch} from "@reduxjs/toolkit";
 import {InferActionType, BaseThunkType} from "src/Redux/Redux-store";
@@ -14,37 +14,33 @@ let initialState = {
     followingInProgress: [] as Array<number> // array user id
 };
 
-type InitialStateType = typeof initialState
-type ActionType = InferActionType<typeof userActions>
-type DispatchType = Dispatch<ActionType>
-
 const usersReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case 'FOLLOW': {
+        case "SN/USERS/FOLLOW": {
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
             }
         }
-        case 'UNFOLLOW': {
+        case "SN/USERS/UNFOLLOW": {
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
             }
         }
-        case 'SET_USERS': {
+        case "SN/USERS/SET_USERS": {
             return {...state, users: action.users}
         }
-        case 'SET_CURRENT_PAGE': {
+        case "SN/USERS/SET_CURRENT_PAGE": {
             return {...state, currentPage: action.currentPage}
         }
-        case 'SET_TOTAL_USERS_COUNT': {
+        case "SN/USERS/SET_TOTAL_USERS_COUNT" : {
             return {...state, totalUsersCount: action.totalCount}
         }
-        case 'TOGGLE_IS_LOADING': {
+        case "SN/USERS/TOGGLE_IS_LOADING": {
             return {...state, isLoading: action.isLoading}
         }
-        case 'TOGGLE_IS_DISABLED': {
+        case "SN/USERS/TOGGLE_IS_DISABLED": {
             return {
                 ...state,
                 followingInProgress: action.progress
@@ -58,13 +54,13 @@ const usersReducer = (state = initialState, action: ActionType): InitialStateTyp
 };
 
 export const userActions = {
-    follow: (userId: number) => ({type: "FOLLOW", userId} as const),
-    unfollow: (userId: number) => ({type: "UNFOLLOW", userId} as const),
-    setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users} as const),
-    setCurrentPage: (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const),
-    setTotalUsersCount: (totalCount: number) => ({type: "SET_TOTAL_USERS_COUNT", totalCount} as const),
-    toggleIsLoading: (isLoading: boolean) => ({type: "TOGGLE_IS_LOADING", isLoading} as const),
-    toggleIsDisabled: (progress: boolean, userId: number) => ({type: "TOGGLE_IS_DISABLED", progress, userId} as const),
+    follow: (userId: number) => ({type: "SN/USERS/FOLLOW", userId} as const),
+    unfollow: (userId: number) => ({type: "SN/USERS/UNFOLLOW", userId} as const),
+    setUsers: (users: Array<UserType>) => ({type: "SN/USERS/SET_USERS", users} as const),
+    setCurrentPage: (currentPage: number) => ({type: "SN/USERS/SET_CURRENT_PAGE", currentPage} as const),
+    setTotalUsersCount: (totalCount: number) => ({type: "SN/USERS/SET_TOTAL_USERS_COUNT", totalCount} as const),
+    toggleIsLoading: (isLoading: boolean) => ({type: "SN/USERS/TOGGLE_IS_LOADING", isLoading} as const),
+    toggleIsDisabled: (progress: boolean, userId: number) => ({type: "SN/USERS/TOGGLE_IS_DISABLED", progress, userId} as const),
 }
 
 export const requestUsers = (page: number, pageSize: number): BaseThunkType<ActionType> => {
@@ -97,3 +93,7 @@ export const unfollowThunk = (userId: number, rest: "post" | "delete"): BaseThun
 };
 
 export default usersReducer
+
+type InitialStateType = typeof initialState
+type ActionType = InferActionType<typeof userActions>
+type DispatchType = Dispatch<ActionType>

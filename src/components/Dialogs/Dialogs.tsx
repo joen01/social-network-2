@@ -1,6 +1,6 @@
 import React from "react";
 import f from "./Dialogs.module.css";
-import DialogItem from "./DialogItem/DialogItem";
+import DialogItem from "src/components/Dialogs/DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Form, Formik} from 'formik';
 import {createValidationSchema} from "src/utils/Validator/validationFormComponent";
