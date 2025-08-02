@@ -67,8 +67,8 @@ import {UserType} from "src/Types/Types";
 type PropsType = {
     user:UserType
     followingInProgress:Array<number> // array user id
-    unfollowThunk: (userId:number, rest:any) => void
-    followThunk: (userId:number, rest:any) => void
+    unfollowThunk: (userId:number, rest: "delete") => void
+    followThunk: (userId:number, rest:"post") => void
 
 }
 let User:React.FC<PropsType> = ({user,followingInProgress,unfollowThunk,followThunk}) => {
@@ -85,12 +85,12 @@ let User:React.FC<PropsType> = ({user,followingInProgress,unfollowThunk,followTh
                     {user.followed
                         ? <button disabled={followingInProgress.some(id => id === user.id)}
                                   onClick={() => {
-                                      unfollowThunk(user.id, 'delete')
+                                      unfollowThunk(user.id, "delete")
                                   }}> Unfollow </button>
 
                         : <button disabled={followingInProgress.some(id => id === user.id)}
                                   onClick={() => {
-                                      followThunk(user.id, 'post')
+                                      followThunk(user.id, "post")
                                   }}> follow </button>
                     }
                                 </div>

@@ -3,6 +3,12 @@ import {ThunkAction} from "@reduxjs/toolkit";
 import {AppStateType, InferActionType} from "src/Redux/Redux-store";
 import {profileApi} from "src/Api/ProfileApi";
 
+export  type initialStateType = typeof initialState
+export type ProfileActionType = InferActionType<typeof profileAction>
+type ThunkType = ThunkAction<void, AppStateType, unknown, ProfileActionType>
+// type ThunkType = BaseThunkType<ProfileActionType>
+
+
 let initialState = {
     posts: [
         {id: 1, message: "Hello, how are you ", like: "like 1"},
@@ -107,7 +113,3 @@ export const saveProfile = (profile: ProfileType | null): ThunkType => async (di
 
 export default profileReducer
 
-export  type initialStateType = typeof initialState
-export type ProfileActionType = InferActionType<typeof profileAction>
-type ThunkType = ThunkAction<void, AppStateType, unknown, ProfileActionType>
-// type ThunkType = BaseThunkType<ProfileActionType>

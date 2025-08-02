@@ -20,8 +20,8 @@ export const createValidationSchema = (fields) => {
             case 'message':
                 schema[field.name] = Yup.string()
                     .required('Сообщение обязательно')
-                    .min(10, 'Сообщение должно содержать хотя бы 10 символ')
-                    .max(15, "max symbols")
+                    .min(1, 'Сообщение должно содержать хотя бы 10 символ')
+                    .max(150, "max symbols")
                 break;
             case 'email':
                 schema[field.name] = Yup.string()

@@ -1,6 +1,3 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
 // import News from "./components/News/News";
 // import Music from "./components/Music/Music";
 // import Settings from "./components/Settings/Settings";
@@ -8,16 +5,19 @@ import Navbar from './components/Navbar/Navbar';
 // import FriendsContainer from "./components/Friends/FriendsContainer";
 // import UsersContainer from "./components/Users/UsersContainer";
 // import Login from "./components/Login/Login";
-import ProfileContainer from "./components/Profile/Profile Container2";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import './App.css';
+import Navbar from './components/Navbar/Navbar';
+import ProfileContainer from "./components/Profile/ProfileContainer2";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {initializedApp} from "./Redux/App-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import React, {lazy, useEffect} from "react";
-import store from "./Redux/Redux-store";
-import WithSuspense from "./Hoc/WithSuspense";
+import React, {ComponentType, lazy, useEffect} from "react";
+import store, {AppStateType} from "./Redux/Redux-store";
+import WithSuspense from "src/Hoc/WithSuspense";
 
-const DialogsContainer = WithSuspense(lazy(() => import('./components/Dialogs/DialogsContainer')));
+const DialogsContainer = WithSuspense(lazy(() => import('./components/Dialogs/DialogsContainer')as Promise<{ default: ComponentType<any> }>));
 const UsersContainer = WithSuspense(lazy(() => import('./components/Users/UsersContainer')));
 const FriendsContainer = WithSuspense(lazy(() => import('./components/Friends/FriendsContainer')));
 const Login = WithSuspense(lazy(() => import('./components/Login/Login')));
@@ -25,25 +25,15 @@ const Music = WithSuspense(lazy(() => import('./components/Music/Music')));
 const News = WithSuspense(lazy(() => import('./components/News/News')));
 const Settings = WithSuspense(lazy(() => import('./components/Settings/Settings')));
 
+type MapPropsType= ReturnType<typeof mapStateToProps>
+type DispatchPropsType= {
+    initializedApp: ()=>void
+}
 
-const App = ({initializedApp, initialized}) => {
+const App:React.FC<MapPropsType & DispatchPropsType> = ({initializedApp, initialized}) => {
 
     useEffect(() => {
         initializedApp();
-
-        // обработка всех ошибок промисов
-
-        // const handleRejection = (event) => {
-        //     console.log("Unhandled rejection:", event);
-        //     alert(`Unhandled rejection (promise: ${event.promise}, reason: ${event.reason})`);
-        // };
-        //
-        // window.addEventListener('unhandledrejection', handleRejection);
-        //
-        // return () => {
-        //     window.removeEventListener('unhandledrejection', handleRejection);
-        // };
-
     }, [initializedApp])
 
     if (!initialized) {
@@ -72,7 +62,7 @@ const App = ({initializedApp, initialized}) => {
     )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state:AppStateType) => ({
     initialized: state.app.initialized,
 })
 
@@ -80,7 +70,7 @@ const mapStateToProps = (state) => ({
 const AppContainer = connect(mapStateToProps, {initializedApp})(App);
 
 
-const AppSamurai = () => {
+const AppSamurai:React.FC = () => {
     return (
         <BrowserRouter>
             <React.StrictMode>

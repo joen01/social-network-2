@@ -3,15 +3,15 @@ import f from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "../ProfileStatuswithHooks";
 import ProfileDataForm from "src/components/Profile/ProfileInfo/ProfileDataForm";
-import {ProfileType} from "src/Types/Types";
+import {ContactsType, ProfileType} from "src/Types/Types";
 
 
 type TypeProps = {
-    profile: ProfileType|null
+    profile: ProfileType | null
     status: string
     isOwner: boolean
-    error: string|null
-    savePhoto: (file: any) => void
+    error: string | null
+    savePhoto: (file: File) => void
     updateStatusThunk: (status: string) => void
     saveProfile: (profile: ProfileType) => object
 }
@@ -46,8 +46,9 @@ const ProfileInfo: React.FC<TypeProps> = ({
             </div>
             <div className={f.ava}>
                 <div className={f.container}>
-                    <img src={profile.photos?.large ||
-                        "https://pixelbox.ru/wp-content/uploads/2021/04/ava-mult-vk-7.jpg"} alt="User avatar"/>
+                    <img
+                        src={profile.photos?.large || "https://pixelbox.ru/wp-content/uploads/2021/04/ava-mult-vk-7.jpg"}
+                        alt="User avatar"/>
                     {isOwner && <input type={"file"} onChange={onPhotoSelected} className={f.btn}/>}
                 </div>
                 <ProfileStatus status={status} updateStatusThunk={updateStatusThunk} isOwner={isOwner}/>
@@ -67,14 +68,16 @@ const ProfileInfo: React.FC<TypeProps> = ({
 
         </div>)
 }
-type TypePropsProfileData = {
+
+
+type ProfileDataTypeProps = {
     profile: ProfileType
     isOwner: boolean
     goToEditMode: () => void
     setEditMode: Dispatch<SetStateAction<boolean>>
 }
-const ProfileData: React.FC<TypePropsProfileData> = ({profile, isOwner, goToEditMode}) => {
-        return <div>
+const ProfileData: React.FC<ProfileDataTypeProps> = ({profile, isOwner, goToEditMode}) => {
+    return <div>
         <div className={f.fullName}>
             <b>{profile.fullName} </b>
         </div>
@@ -94,9 +97,12 @@ const ProfileData: React.FC<TypePropsProfileData> = ({profile, isOwner, goToEdit
             <b>lookingForAJobDescription -</b> {profile.lookingForAJobDescription}
         </div>
         <div>
-            <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
-                return <Contact key={key} contactTitle={key} contactValues={profile.contacts[key]}/>
-        })}
+            <b>Contacts</b>: {
+            Object
+                .keys(profile.contacts)
+                .map((key) => {
+                return <Contact key={key} contactTitle={key} contactValues={profile.contacts[key as keyof ContactsType]}/>
+            })}
         </div>
         {isOwner && <div>
             <button onClick={goToEditMode}> Редактировать</button>

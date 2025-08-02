@@ -4,7 +4,7 @@ import DialogItem from "src/components/Dialogs/DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Form, Formik} from 'formik';
 import {createValidationSchema} from "src/utils/Validator/validationFormComponent";
-import FormControl from "src/components/formControl/FormControl";
+import {createFormControl} from "src/components/formControl/FormControl";
 import {DialogsPageType} from "src/Types/Types";
 
 
@@ -19,8 +19,8 @@ const Dialogs: React.FC<TypeProps> = (props) => {
     const messageElements = props.dialogsPage.messages.map(mes => <Message message={mes.message} key={mes.id}
                                                                            id={mes.id}/>);
 
-    const addMessage = (values: string) => {
-        props.addMes(values);
+    const addMessage = (values: { message:string }) => {
+        props.addMes(values.message);
     };
 
     return (
@@ -36,9 +36,15 @@ const Dialogs: React.FC<TypeProps> = (props) => {
     );
 };
 
+
 type AddMessagesFormPropsType = {
-    addMessage: (values: string) => void
+    addMessage: (values: { message:string }) => void
 }
+type DialogValuesType = {
+    message: string
+}
+type DialogValuesKeyType = Extract<keyof DialogValuesType, string>
+
 const AddMessagesForm: React.FC<AddMessagesFormPropsType> = (props) => {
 
     const validationSchema = createValidationSchema([{name: 'message'}])
@@ -48,20 +54,13 @@ const AddMessagesForm: React.FC<AddMessagesFormPropsType> = (props) => {
             initialValues={{message: ''}}
             validationSchema={validationSchema}
             onSubmit={(values, {resetForm}) => {
-                props.addMessage(values.message);
+                props.addMessage(values);
                 resetForm(); // Сброс формы после отправки
             }}
         >
             {({handleSubmit, errors, touched}) => (
                 <Form onSubmit={handleSubmit}>
-                    <FormControl
-                        name="message"
-                        component="textarea"
-                        errors={errors}
-                        touched={touched}
-                        placeholder="Hello Joen"
-                        type=""
-                        nameLabel=""/>
+                    {createFormControl<DialogValuesKeyType>("message", "textarea", errors, touched, "Hello Joen", "", "")}
                     <div>
                         <button type="submit">отправить</button>
                     </div>

@@ -13,7 +13,7 @@ type MapDispatchPropsType = {
     updateStatusThunk: (status: string) => void
     getProfileThunk: (userId: number|null) => void
     getStatusThunk: (userId: number|null) => void
-    savePhoto: (file: any) => void
+    savePhoto: (file: File) => void
     saveProfile: (profile: ProfileType|null) => object
 }
 
@@ -50,7 +50,6 @@ let ProfileContainer: React.FC<PropsType> = (props) => {
                  error={props.errorProfile}/>)
 }
 
-
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.profilePage.profile,
@@ -60,7 +59,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-
 export default compose(
     connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
 (mapStateToProps, {
@@ -68,4 +66,4 @@ export default compose(
     getStatusThunk,
     updateStatusThunk,
     savePhoto, saveProfile
-}), WithNavigate)(ProfileContainer)
+}), WithNavigate)(ProfileContainer)as React.ComponentType<any>

@@ -20,17 +20,18 @@ const mapStateToProps = (state:AppStateType):MapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch:any):MapDispatchToPropsType => {
-    return {
-        addMes: (values) => {
-            dispatch(dialogAction.addMesActionCreator(values))
-        }
-    }
-}
+// const mapDispatchToProps = (dispatch:any):MapDispatchToPropsType => {
+//     return {
+//         addMes: (values) => {
+//             dispatch(dialogAction.addMesActionCreator(values))
+//         }
+//     }
+// }
 
 
 
-const DialogsContainer = compose(connect<MapStateToPropsType, MapDispatchToPropsType,OwnPropsType, AppStateType>(mapStateToProps, mapDispatchToProps),WithNavigate)(Dialogs)
+const DialogsContainer = compose(connect<MapStateToPropsType, MapDispatchToPropsType,OwnPropsType, AppStateType>
+(mapStateToProps, {addMes: dialogAction.addMesActionCreator}),WithNavigate)(Dialogs)
 
 
 export default DialogsContainer

@@ -1,5 +1,5 @@
 export type PostsType = {
-    id: number
+    id?: number
     message: string
     like: string
 }
@@ -16,7 +16,6 @@ export type ContactsType = {
     website: string
     youtube: string
     mainLink: string
-    [key: string]: string
 }
 
 export type ProfileType = {
