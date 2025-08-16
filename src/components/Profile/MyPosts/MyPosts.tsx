@@ -6,12 +6,14 @@ import {createValidationSchema} from "src/utils/Validator/validationFormComponen
 import {createFormControl} from "../../formControl/FormControl";
 import {PostsType} from "src/Types/Types";
 
-type PropsType = {
-    posts: Array<PostsType>,
-    addPost: (values: string) => void
+export type PropsType = {
+    posts: Array<PostsType>
+}
+export type DispatchPropsType = {
+       addPost: (values: string) => void
 }
 
-const MyPosts: React.FC<PropsType> = React.memo(props => {
+const MyPosts: React.FC<PropsType & DispatchPropsType> = React.memo(props => {
     let postElement = [...props.posts]
         .reverse()
         .map(p => <Post key={p.id} message={p.message} like={p.like}/>);

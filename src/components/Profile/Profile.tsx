@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from "src/components/Profile/ProfileInfo/ProfileInfo";
 import MyPostsContainer from "src/components/Profile/MyPosts/MyPostsContainer";
-import Preloader from "../common/Preloader/Preloader";
+import Preloader from "src/components/common/Preloader/Preloader";
 import {ProfileType} from "src/Types/Types";
 
 type PropsType = {

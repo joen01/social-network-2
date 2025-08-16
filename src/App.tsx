@@ -7,12 +7,12 @@
 // import Login from "./components/Login/Login";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from 'src/components/Navbar/Navbar';
 import ProfileContainer from "./components/Profile/ProfileContainer2";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import HeaderContainer from "src/components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {initializedApp} from "./Redux/App-reducer";
-import Preloader from "./components/common/Preloader/Preloader";
+import Preloader from "src/components/common/Preloader/Preloader";
 import React, {ComponentType, lazy, useEffect} from "react";
 import store, {AppStateType} from "./Redux/Redux-store";
 import WithSuspense from "src/Hoc/WithSuspense";
@@ -21,7 +21,7 @@ const DialogsContainer = WithSuspense(lazy(() => import('./components/Dialogs/Di
 const UsersContainer = WithSuspense(lazy(() => import('./components/Users/UsersContainer')));
 const FriendsContainer = WithSuspense(lazy(() => import('./components/Friends/FriendsContainer')));
 const Login = WithSuspense(lazy(() => import('./components/Login/Login')));
-const Music = WithSuspense(lazy(() => import('./components/Music/Music')));
+const Music = WithSuspense(lazy(() => import('src/components/Music/Music')));
 const News = WithSuspense(lazy(() => import('./components/News/News')));
 const Settings = WithSuspense(lazy(() => import('./components/Settings/Settings')));
 

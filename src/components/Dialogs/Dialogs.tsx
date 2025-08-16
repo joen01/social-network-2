@@ -1,7 +1,7 @@
 import React from "react";
 import f from "./Dialogs.module.css";
 import DialogItem from "src/components/Dialogs/DialogItem/DialogItem";
-import Message from "./Message/Message";
+import Message from "src/components/Dialogs/Message/Message";
 import {Form, Formik} from 'formik';
 import {createValidationSchema} from "src/utils/Validator/validationFormComponent";
 import {createFormControl} from "src/components/formControl/FormControl";
@@ -16,8 +16,7 @@ type TypeProps = {
 
 const Dialogs: React.FC<TypeProps> = (props) => {
     const dialogElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>);
-    const messageElements = props.dialogsPage.messages.map(mes => <Message message={mes.message} key={mes.id}
-                                                                           id={mes.id}/>);
+    const messageElements = props.dialogsPage.messages.map(mes => <Message message={mes.message}/>);
 
     const addMessage = (values: { message:string }) => {
         props.addMes(values.message);

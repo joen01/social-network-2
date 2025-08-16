@@ -1,6 +1,6 @@
 import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
 import f from "./ProfileInfo.module.css"
-import Preloader from "../../common/Preloader/Preloader";
+import Preloader from "src/components/common/Preloader/Preloader";
 import ProfileStatus from "../ProfileStatuswithHooks";
 import ProfileDataForm from "src/components/Profile/ProfileInfo/ProfileDataForm";
 import {ContactsType, ProfileType} from "src/Types/Types";

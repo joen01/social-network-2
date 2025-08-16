@@ -6,7 +6,7 @@ import {
     unfollowThunk} from "src/Redux/Users-reducer";
 import Users from "./Users";
 import React from "react";
-import Preloader from "../common/Preloader/Preloader";
+import Preloader from "src/components/common/Preloader/Preloader";
 import {
     getCurrentPage,
     getFollowingInProgress,
