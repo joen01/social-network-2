@@ -23,7 +23,7 @@ const FriendsContainer = WithSuspense(lazy(() => import('./components/Friends/Fr
 const Login = WithSuspense(lazy(() => import('./components/Login/Login')));
 const Music = WithSuspense(lazy(() => import('src/components/Music/Music')));
 const News = WithSuspense(lazy(() => import('./components/News/News')));
-const Settings = WithSuspense(lazy(() => import('./components/Settings/Settings')));
+const Settings = WithSuspense(lazy(() => import('src/components/Settings/Settings')));
 
 type MapPropsType= ReturnType<typeof mapStateToProps>
 type DispatchPropsType= {

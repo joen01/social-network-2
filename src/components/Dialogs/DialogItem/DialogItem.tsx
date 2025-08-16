@@ -11,7 +11,6 @@ const DialogItem: React.FC<TypeProps> = (props) => {
     let path = "/dialogs/" + props.id
     return <div className={f.dialog}>
         <img src={ava} alt={"img"}/>
-
         <NavLink to={path}>{props.name}</NavLink>
 
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import f from "./Settings.module.css"
 
- const Settings = () => {
+ const Settings:React.FC = () => {
     return (
         <div className={f.item}>
             Settings
