@@ -22,7 +22,7 @@ const UsersContainer = WithSuspense(lazy(() => import('./components/Users/UsersC
 const FriendsContainer = WithSuspense(lazy(() => import('./components/Friends/FriendsContainer')));
 const Login = WithSuspense(lazy(() => import('./components/Login/Login')));
 const Music = WithSuspense(lazy(() => import('src/components/Music/Music')));
-const News = WithSuspense(lazy(() => import('./components/News/News')));
+const News = WithSuspense(lazy(() => import('src/components/News/News')));
 const Settings = WithSuspense(lazy(() => import('src/components/Settings/Settings')));
 
 type MapPropsType= ReturnType<typeof mapStateToProps>
